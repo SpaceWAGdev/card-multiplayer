@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://behjqi50pqpgo"]
+
+[sub_resource type="GDScript" id="GDScript_ijmc4"]
+script/source = "extends Control
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	print(\"Main Game started\")
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
+[sub_resource type="ImageTexture" id="ImageTexture_ku354"]
+
+[node name="main_game" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_ijmc4")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="PanelContainer"]
+texture = SubResource("ImageTexture_ku354")

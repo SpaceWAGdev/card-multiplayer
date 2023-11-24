@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cb41wr288jatf"]
+
+[ext_resource type="Texture2D" uid="uid://b7wrssgmr2i5j" path="res://Cards/images/Image-1.jpg" id="1_3kwd5"]
+
+[node name="card" type="TextureRect"]
+texture = ExtResource("1_3kwd5")
+expand_mode = 3
+stretch_mode = 4
