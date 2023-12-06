@@ -12,6 +12,6 @@ config_version=5
 
 config/name="card-game"
 run/main_scene="res://game.tscn"
-config/features=PackedStringArray("4.1", "Mobile")
+config/features=PackedStringArray("4.2", "Mobile")
 boot_splash/show_image=false
 config/icon="res://icon.svg"

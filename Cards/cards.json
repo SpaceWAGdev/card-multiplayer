@@ -9,12 +9,15 @@
 		"uuid": "8d056e3e-8555-11ee-b9d1-0242ac120002",
 		"name": "Herr Sharifian",
 		"health": 9,
-		"mana": 2
+		"mana": 2,
+		"damage": 5
 	},
 	"3964a6c8-325f-46e2-8dda-595cec5c7d4f" : {
 		"uuid" : "3964a6c8-325f-46e2-8dda-595cec5c7d4f",
 		"name" : "Jakob",
-		"health" : 5,
-		"mana" : 5
+		"health" : 15,
+		"mana" : 5,
+		"damage": 2,
+		"class": "Bard"
 	}
 }

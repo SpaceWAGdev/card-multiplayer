@@ -1,4 +1,9 @@
 class_name CardBase
-extends Node2D
-@export var	health : int
-@export var card_name : String
+extends TextureRect
+@export var	data: Dictionary
+
+func setup(_data: Dictionary):
+	data = _data
+
+func battlecry():
+	print(data["name"], ": Battlecry")

@@ -11,6 +11,10 @@ var MASTER_CARD_RECORD : Dictionary = {
 	"REMOTE_PLAYAREA": []
 }
 
+var MAX_HAND_SIZE = 9
+var MAX_DECK_SIZE = 1024
+var MAX_PLAYAREA_SIZE = 5
+
 func load_text_file(path):
 	var file = FileAccess.open(path, FileAccess.READ)
 	if file == null:
@@ -29,9 +33,10 @@ func get_card_data(uuid: String):
 func create_card_instance(data: Dictionary, check_for_duplicates = false):
 	var card_image = load("res://Cards/card.tscn").instantiate()
 	card_image.set_meta("card_data", data)
-	var script = load("res://Cards/scripts/" + data["uuid"] + ".gd").new()
-	var img = load("res://Cards/images/Image-1.jpg")
+	var script = load("res://Cards/scripts/" + data["uuid"] + ".gd")
+	var img = load("res://Cards/images/"+data["uuid"]+".png")
 	card_image.texture = img
+	card_image.script = script
 	print(card_image.texture)
 	
 	if card_image in MASTER_CARD_RECORD["LOCAL_DECK"] and check_for_duplicates:
@@ -39,8 +44,12 @@ func create_card_instance(data: Dictionary, check_for_duplicates = false):
 	
 	MASTER_CARD_RECORD["LOCAL_DECK"].append(card_image)
 	update_screen_area(MASTER_CARD_RECORD["LOCAL_DECK"], $VBoxContainer/LocalDeck)
-	print(card_image.get_children())
-	print(MASTER_CARD_RECORD)
+	card_image.setup(data)
+	if len(MASTER_CARD_RECORD["LOCAL_DECK"]) > 2:
+		card_image.set_meta("card_data", MASTER_CARD_RECORD["LOCAL_DECK"][0].attack(data))
+	print(card_image.get_meta("card_data"))
+	print("Children of Card:", card_image.get_children())
+	print("New Master Card Record:", MASTER_CARD_RECORD)
 	
 func _ready():
 	socket.connect_to_url("wss://ws.postman-echo.com/raw")
@@ -54,7 +63,7 @@ func update_screen_area(cards: Array, card_location: Node):
 			card_location.add_child(card)
 			print("Added Card " + card.get_meta("card_data")["name"])
 	
-func send_msg():
+func dbg_send_msg():
 	if (socket.get_ready_state() == WebSocketPeer.STATE_OPEN):
 		socket.send_text("hello, cardgame")
 
@@ -75,7 +84,7 @@ func _process(_delta):
 		set_process(false) # Stop processing.
 
 func _on_button_pressed():
-	send_msg() # Replace with function body.
+	dbg_send_msg() # Replace with function body.
 
 func dbg_spawn_card():
 	create_card_instance(get_card_data("3964a6c8-325f-46e2-8dda-595cec5c7d4f"))

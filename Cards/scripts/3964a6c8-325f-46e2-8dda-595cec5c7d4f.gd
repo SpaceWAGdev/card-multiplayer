@@ -1,9 +1,8 @@
 extends CardBase
 
-func setup(data: Dictionary):
-	health = data["health"]
-	card_name = data["name"]
+func setup(_data: Dictionary):
+	data = _data
 
 func attack(card):
-	card.health -= 5
-	return health
+	card["health"] -= data["damage"]
+	return card
