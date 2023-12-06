@@ -26,13 +26,17 @@ func get_card_data(uuid: String):
 	else:
 		return null
 
-func create_card_instance(data: Dictionary):
+func create_card_instance(data: Dictionary, check_for_duplicates = false):
 	var card_image = load("res://Cards/card.tscn").instantiate()
 	card_image.set_meta("card_data", data)
 	var script = load("res://Cards/scripts/" + data["uuid"] + ".gd").new()
+	var img = load("res://Cards/images/Image-1.jpg")
+	card_image.texture = img
+	print(card_image.texture)
 	
-	if card_image in MASTER_CARD_RECORD["LOCAL_DECK"]:
+	if card_image in MASTER_CARD_RECORD["LOCAL_DECK"] and check_for_duplicates:
 		return
+	
 	MASTER_CARD_RECORD["LOCAL_DECK"].append(card_image)
 	update_screen_area(MASTER_CARD_RECORD["LOCAL_DECK"], $VBoxContainer/LocalDeck)
 	print(card_image.get_children())
@@ -74,4 +78,4 @@ func _on_button_pressed():
 	send_msg() # Replace with function body.
 
 func dbg_spawn_card():
-	create_card_instance(get_card_data("8d056e3e-8555-11ee-b9d1-0242ac120002"))
+	create_card_instance(get_card_data("3964a6c8-325f-46e2-8dda-595cec5c7d4f"))
