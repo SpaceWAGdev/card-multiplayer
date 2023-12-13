@@ -14,8 +14,7 @@ var MASTER_LOCATION_RECORD: Dictionary = {
 	"LOCAL_HAND": null,
 	"LOCAL_DECK": null,
 	"LOCAL_PLAYAREA": null,
-	"REMOTE_PLAYAREA": null,
-	"LOCAL_CHARACTER": null
+	"REMOTE_PLAYAREA": null
 }
 
 var MAX_HAND_SIZE = 9
@@ -29,11 +28,10 @@ func _ready():
 	init_card_areas()
 
 func init_card_areas():
-	MASTER_LOCATION_RECORD["LOCAL_HAND"] = get_node("VBoxContainer/BottomArea/LOCAL_HAND")
+	MASTER_LOCATION_RECORD["LOCAL_HAND"] = get_node("VBoxContainer/LOCAL_HAND")
 	MASTER_LOCATION_RECORD["LOCAL_DECK"] = get_node("VBoxContainer/LOCAL_DECK")
 	MASTER_LOCATION_RECORD["LOCAL_PLAYAREA"] = get_node("VBoxContainer/LOCAL_PLAYAREA")
 	MASTER_LOCATION_RECORD["REMOTE_PLAYAREA"] = get_node("VBoxContainer/REMOTE_PLAYAREA")
-	MASTER_LOCATION_RECORD["LOCAL_CHARACTER"] = get_node("VBoxContainer/BottomArea/LOCAL_CHARACTER")
 
 func _process(_delta):
 	poll_ws()
@@ -58,30 +56,26 @@ func poll_ws():
 		print("WebSocket closed with code: %d, reason %s. Clean: %s" % [code, reason, code != -1])
 		set_process(false) # Stop processing.
 
-func create_card_instance(data: Dictionary, check_for_duplicates = false):
+func create_card_instance(data: Dictionary, check_for_duplicates = false, location : String  = "LOCAL_DECK"):
 	var card_image = load("res://Cards/card.tscn").instantiate()
 	card_image.set_meta("card_data", data)
 	var script = load("res://Cards/scripts/" + data["uuid"] + ".gd")
 	var img = load("res://Cards/images/"+ data["uuid"] + ".png")
 	card_image.texture = img
 	card_image.script = script
-	print(card_image.texture)
 	
-	if card_image in MASTER_CARD_RECORD["LOCAL_DECK"] and check_for_duplicates:
+	if card_image in MASTER_CARD_RECORD[location] and check_for_duplicates:
 		return
 	
-	get_node("%LOCAL_DECK").add_child(card_image)
-	update_screen_area("LOCAL_DECK")
+	MASTER_LOCATION_RECORD[location].add_child(card_image)
+	update_screen_area(location)
 	card_image.setup(data)
 		
 	var click_event = card_image.gui_input
 	click_event.connect(card_image.on_click)
 	
+	print("### create_card_instance: " + card_image.get_meta("card_data")["name"])
 	card_image.battlecry()
-	
-	print(card_image.get_meta("card_data"))
-	print("Children of Card:", card_image.get_children())
-	print("New Master Card Record:", MASTER_CARD_RECORD)
 	
 func update_screen_area(Area: String):
 	for child in find_child(Area, true).get_children():
@@ -90,8 +84,8 @@ func update_screen_area(Area: String):
 			print("Added " + child.name + " to " + Area + " record") 
 	for child in MASTER_CARD_RECORD[Area]:
 		if child not in find_child(Area, true).get_children():
-			MASTER_CARD_RECORD[Area].remove(child)
-			print("Removed " + child + " from " +  Area)
+			MASTER_CARD_RECORD[Area].erase(child)
+			print("Removed " + child.name + " from " +  Area)
 
 func get_card_data(uuid: String):
 	var card_list = JSON.parse_string((Helpers.load_text_file(("res://Cards/cards.json"))))
@@ -105,7 +99,7 @@ func load_deck(deck_name: String):
 	create_card_instance(get_card_data(deck["leader"]))
 	for card in deck["cards"]:
 		create_card_instance(get_card_data(card))
-	for child in $VBoxContainer/LOCAL_DECK.get_children():
+	for child in MASTER_LOCATION_RECORD["LOCAL_DECK"].get_children():
 		if child.get_meta("card_data")["class"] == "leader":
 			move_card(child, "LOCAL_CHARACTER")
 		else:
@@ -137,3 +131,5 @@ func finish_round():
 func start_round():
 	pass
 	
+func register_interaction(type: String ):
+	pass

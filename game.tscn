@@ -38,16 +38,7 @@ layout_mode = 2
 size_flags_vertical = 3
 alignment = 1
 
-[node name="BottomArea" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="LOCAL_HAND" type="HBoxContainer" parent="VBoxContainer/BottomArea"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-alignment = 1
-
-[node name="LOCAL_CHARACTER" type="HBoxContainer" parent="VBoxContainer/BottomArea"]
+[node name="LOCAL_HAND" type="HBoxContainer" parent="VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3

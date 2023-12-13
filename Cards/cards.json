@@ -1,10 +1,4 @@
 {
-	"5c7031f0-8555-11ee-b9d1-0242ac120002" : {
-		"uuid": "5c7031f0-8555-11ee-b9d1-0242ac120002",
-		"name": "Noah",
-		"health": 10,
-		"mana": 3
-	},
 	"8d056e3e-8555-11ee-b9d1-0242ac120002" : {
 		"uuid": "8d056e3e-8555-11ee-b9d1-0242ac120002",
 		"type": "entity",
@@ -24,5 +18,15 @@
 		"damage": 2,
 		"class": "Barde",
 		"tooltip": "Massiver Penis"
-	}
+	},
+	"7f2f4188-773d-4ac4-b8f4-075c6df850d1" : {
+		"uuid" : "7f2f4188-773d-4ac4-b8f4-075c6df850d1",
+		"type": "spell",
+		"name" : "Magic Broccoli",
+		"health" : 0,
+		"mana" : 1,
+		"damage": 0,
+		"class": "Drug",
+		"tooltip": ""
+	} 
 }
