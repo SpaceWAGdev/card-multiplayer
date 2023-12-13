@@ -6,3 +6,6 @@ func setup(_data: Dictionary):
 func attack(card):
 	card["health"] -= data["damage"]
 	return card
+
+func battlecry():
+	print(data["name"]+ "'s custom Battlecry")

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c0u327em4e4cg"]
 
-[ext_resource type="Script" path="res://test_websocket.gd" id="1_74agr"]
+[ext_resource type="Script" path="res://main_game.gd" id="1_646wj"]
 
 [node name="PanelContainer" type="PanelContainer"]
 anchors_preset = 15
@@ -10,7 +10,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("1_74agr")
+script = ExtResource("1_646wj")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -19,32 +19,42 @@ theme_override_constants/separation = 30
 [node name="DebugUI" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="VBoxContainer/DebugUI"]
-layout_mode = 2
-text = "SEND TEST MSG"
-flat = true
-
-[node name="debug_message" type="Label" parent="VBoxContainer/DebugUI"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.27451, 0.603922, 0.537255, 1)
-text = "PACKET"
-vertical_alignment = 1
-
-[node name="Button2" type="Button" parent="VBoxContainer/DebugUI"]
+[node name="SpawnButton" type="Button" parent="VBoxContainer/DebugUI"]
 layout_mode = 2
 text = "SPAWN CARD"
 flat = true
 
-[node name="LocalDeck" type="HBoxContainer" parent="VBoxContainer"]
+[node name="REMOTE_PLAYAREA" type="HBoxContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 alignment = 1
 
-[node name="LocalDeck2" type="HBoxContainer" parent="VBoxContainer"]
+[node name="LOCAL_PLAYAREA" type="HBoxContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 alignment = 1
 
-[connection signal="pressed" from="VBoxContainer/DebugUI/Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/DebugUI/Button2" to="." method="dbg_spawn_card"]
+[node name="BottomArea" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="LOCAL_HAND" type="HBoxContainer" parent="VBoxContainer/BottomArea"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="LOCAL_CHARACTER" type="HBoxContainer" parent="VBoxContainer/BottomArea"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="LOCAL_DECK" type="Node" parent="VBoxContainer"]
+unique_name_in_owner = true
+
+[node name="REMOTE_DECK" type="Node" parent="VBoxContainer"]
+unique_name_in_owner = true
+
+[connection signal="pressed" from="VBoxContainer/DebugUI/SpawnButton" to="." method="_dbg_spawn_card"]

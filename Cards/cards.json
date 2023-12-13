@@ -7,17 +7,22 @@
 	},
 	"8d056e3e-8555-11ee-b9d1-0242ac120002" : {
 		"uuid": "8d056e3e-8555-11ee-b9d1-0242ac120002",
-		"name": "Herr Sharifian",
+		"type": "entity",
+		"name": "Der Sharif",
 		"health": 9,
 		"mana": 2,
-		"damage": 5
+		"damage": 5,
+		"class": "Leader",
+		"tooltip": ""
 	},
 	"3964a6c8-325f-46e2-8dda-595cec5c7d4f" : {
 		"uuid" : "3964a6c8-325f-46e2-8dda-595cec5c7d4f",
+		"type": "entity",
 		"name" : "Jakob",
 		"health" : 15,
 		"mana" : 5,
 		"damage": 2,
-		"class": "Bard"
+		"class": "Barde",
+		"tooltip": "Massiver Penis"
 	}
 }

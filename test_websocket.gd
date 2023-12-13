@@ -34,7 +34,7 @@ func create_card_instance(data: Dictionary, check_for_duplicates = false):
 	var card_image = load("res://Cards/card.tscn").instantiate()
 	card_image.set_meta("card_data", data)
 	var script = load("res://Cards/scripts/" + data["uuid"] + ".gd")
-	var img = load("res://Cards/images/"+data["uuid"]+".png")
+	var img = load("res://Cards/images/"+ data["uuid"] + ".png")
 	card_image.texture = img
 	card_image.script = script
 	print(card_image.texture)
@@ -84,7 +84,7 @@ func _process(_delta):
 		set_process(false) # Stop processing.
 
 func _on_button_pressed():
-	dbg_send_msg() # Replace with function body.
+	dbg_send_msg()
 
 func dbg_spawn_card():
 	create_card_instance(get_card_data("3964a6c8-325f-46e2-8dda-595cec5c7d4f"))
