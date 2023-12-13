@@ -11,6 +11,6 @@ func battlecry():
 func on_click(event: InputEvent):
 	if event.is_pressed():
 		print("Click on " + self.data["name"])
-		get_tree().root.get_node("PanelContainer").move_card(self, get_tree().root.get_node("PanelContainer/VBoxContainer/LocalPlayArea"))
+		get_tree().root.get_node("PanelContainer").move_card(self, "%LOCAL_PLAYAREA")
 	else:
 		pass

@@ -6,7 +6,16 @@ var MASTER_CARD_RECORD : Dictionary = {
 	"LOCAL_HAND": [],
 	"LOCAL_DECK": [],
 	"LOCAL_PLAYAREA": [],
-	"REMOTE_PLAYAREA": []
+	"REMOTE_PLAYAREA": [],
+	"LOCAL_CHARACTER": []
+}
+
+var MASTER_LOCATION_RECORD: Dictionary = {
+	"LOCAL_HAND": null,
+	"LOCAL_DECK": null,
+	"LOCAL_PLAYAREA": null,
+	"REMOTE_PLAYAREA": null,
+	"LOCAL_CHARACTER": null
 }
 
 var MAX_HAND_SIZE = 9
@@ -17,6 +26,14 @@ var ROUND = 0
 
 func _ready():
 	init_ws()
+	init_card_areas()
+
+func init_card_areas():
+	MASTER_LOCATION_RECORD["LOCAL_HAND"] = get_node("VBoxContainer/BottomArea/LOCAL_HAND")
+	MASTER_LOCATION_RECORD["LOCAL_DECK"] = get_node("VBoxContainer/LOCAL_DECK")
+	MASTER_LOCATION_RECORD["LOCAL_PLAYAREA"] = get_node("VBoxContainer/LOCAL_PLAYAREA")
+	MASTER_LOCATION_RECORD["REMOTE_PLAYAREA"] = get_node("VBoxContainer/REMOTE_PLAYAREA")
+	MASTER_LOCATION_RECORD["LOCAL_CHARACTER"] = get_node("VBoxContainer/BottomArea/LOCAL_CHARACTER")
 
 func _process(_delta):
 	poll_ws()
@@ -90,20 +107,21 @@ func load_deck(deck_name: String):
 		create_card_instance(get_card_data(card))
 	for child in $VBoxContainer/LOCAL_DECK.get_children():
 		if child.get_meta("card_data")["class"] == "leader":
-			move_card(child, get_node("%LOCAL_CHARACTER"))
+			move_card(child, "LOCAL_CHARACTER")
 		else:
-			move_card(child, get_node("%LOCAL_PLAYAREA"))
-	update_screen_area("LOCAL_PLAYAREA")
+			move_card(child, "LOCAL_HAND")
+	update_screen_area("LOCAL_HAND")
 
-func move_card(card: Node, new_location: Node):
+func move_card(card: Node, new_location: String):
 	var old_parent = card.get_parent()
-	if old_parent == new_location:
+	var new_location_node = MASTER_LOCATION_RECORD[new_location]
+	if old_parent == new_location_node:
 		return
 	old_parent.remove_child(card)
-	new_location.add_child(card)
+	new_location_node.add_child(card)
 	update_screen_area(card.get_parent().name)
-	update_screen_area(new_location.name)
-	print(new_location.name, new_location.get_children())
+	update_screen_area(new_location_node.name)
+	print(new_location_node.name, new_location_node.get_children())
 
 func _dbg_spawn_card():
 	load_deck("default_deck")
