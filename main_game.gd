@@ -56,11 +56,14 @@ func poll_ws():
 		print("WebSocket closed with code: %d, reason %s. Clean: %s" % [code, reason, code != -1])
 		set_process(false) # Stop processing.
 
-func create_card_instance(data: Dictionary, check_for_duplicates = false, location : String  = "LOCAL_DECK"):
+func create_card_instance(uuid: String, check_for_duplicates = false, location : String  = "LOCAL_DECK"):
+	var data = get_card_data(uuid)
 	var card_image = load("res://Cards/card.tscn").instantiate()
 	card_image.set_meta("card_data", data)
 	var script = load("res://Cards/scripts/" + data["uuid"] + ".gd")
 	var img = load("res://Cards/images/"+ data["uuid"] + ".png")
+	if img == null:
+		img = load("res://Cards/images/Image-1.jpg")
 	card_image.texture = img
 	card_image.script = script
 	
@@ -69,7 +72,7 @@ func create_card_instance(data: Dictionary, check_for_duplicates = false, locati
 	
 	MASTER_LOCATION_RECORD[location].add_child(card_image)
 	update_screen_area(location)
-	card_image.setup(data)
+	card_image.setup(data, self)
 		
 	var click_event = card_image.gui_input
 	click_event.connect(card_image.on_click)
@@ -96,9 +99,9 @@ func get_card_data(uuid: String):
 		
 func load_deck(deck_name: String):
 	var deck = JSON.parse_string(Helpers.load_text_file("res://Decks/" + deck_name + ".json"))
-	create_card_instance(get_card_data(deck["leader"]))
+	create_card_instance(deck["leader"])
 	for card in deck["cards"]:
-		create_card_instance(get_card_data(card))
+		create_card_instance(card)
 	for child in MASTER_LOCATION_RECORD["LOCAL_DECK"].get_children():
 		if child.get_meta("card_data")["class"] == "leader":
 			move_card(child, "LOCAL_CHARACTER")
@@ -121,9 +124,9 @@ func _dbg_spawn_card():
 	load_deck("default_deck")
 	return
 	if randi_range(0, 1) == 0:
-		create_card_instance(get_card_data("3964a6c8-325f-46e2-8dda-595cec5c7d4f"))
+		create_card_instance("3964a6c8-325f-46e2-8dda-595cec5c7d4f")
 	else:
-		create_card_instance(get_card_data("8d056e3e-8555-11ee-b9d1-0242ac120002"))
+		create_card_instance("8d056e3e-8555-11ee-b9d1-0242ac120002")
 
 func finish_round():
 	ROUND += 1
