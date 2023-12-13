@@ -92,8 +92,8 @@ func load_deck(deck_name: String):
 		if child.get_meta("card_data")["class"] == "leader":
 			move_card(child, get_node("%LOCAL_CHARACTER"))
 		else:
-			move_card(child, get_node("%LOCAL_HAND"))
-	update_screen_area("LOCAL_HAND")
+			move_card(child, get_node("%LOCAL_PLAYAREA"))
+	update_screen_area("LOCAL_PLAYAREA")
 
 func move_card(card: Node, new_location: Node):
 	var old_parent = card.get_parent()
