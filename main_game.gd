@@ -39,7 +39,7 @@ func init_card_areas():
 func _process(_delta):
 	poll_ws()
 
-func init_ws(url = "wss://ws.postman-echo.com/raw"):
+func init_ws(url = "ws://localhost:8765"):
 	socket.connect_to_url(url)
 	
 func poll_ws():
@@ -48,7 +48,7 @@ func poll_ws():
 	if state == WebSocketPeer.STATE_OPEN:
 		while socket.get_available_packet_count():
 			var packet = socket.get_packet()
-			print("Packet: ", packet)
+			print("Packet: ", packet.get_string_from_utf8())
 			return packet			
 	elif state == WebSocketPeer.STATE_CLOSING:
 		# Keep polling to achieve proper close.
@@ -58,6 +58,23 @@ func poll_ws():
 		var reason = socket.get_close_reason()
 		print("WebSocket closed with code: %d, reason %s. Clean: %s" % [code, reason, code != -1])
 		set_process(false) # Stop processing.
+
+func wait_for_open_connection_and_send_message(message):
+	var max_number_of_attempts = 10
+	var interval_time = 0.2  # seconds
+
+	var current_attempt = 0
+
+	while current_attempt < max_number_of_attempts:
+		if socket.get_ready_state() == socket.STATE_OPEN:
+			# Send the message once the connection is open
+			socket.send_text(message)
+			return true
+			
+		current_attempt += 1
+		await get_tree().create_timer(interval_time)
+
+	return false
 
 func create_card_instance(uuid: String, check_for_duplicates = false, location : String  = "LOCAL_DECK"):
 	if MASTER_LOCATION_RECORD[location].get_child_count() > MAX_SIZES[location]:
@@ -86,7 +103,7 @@ func create_card_instance(uuid: String, check_for_duplicates = false, location :
 	if location == "LOCAL_PLAYAREA":
 		card_image.battlecry()
 	
-	print("Instantiate ", data["name"], " in ", location )
+	print("Instantiated ", data["name"], " (Card Object) in ", location )
 	
 func update_screen_area(Area: String):
 	for child in find_child(Area, true).get_children():
@@ -104,7 +121,7 @@ func get_card_data(uuid: String):
 		return card_list[uuid]
 	else:
 		return null
-		
+
 func load_deck(deck_name: String):
 	var deck = JSON.parse_string(Helpers.load_text_file("res://Decks/" + deck_name + ".json"))
 	create_card_instance(deck["leader"])
@@ -116,6 +133,7 @@ func load_deck(deck_name: String):
 		else:
 			move_card(child, "LOCAL_HAND")
 	update_screen_area("LOCAL_HAND")
+	sync()
 
 func move_card(card: Node, new_location: String):
 	var old_parent = card.get_parent()
@@ -136,12 +154,22 @@ func _dbg_spawn_card():
 
 func finish_round():
 	ROUND += 1
+	sync()
 
 func start_round():
+	ROUND += 1
 	pass
 	
-func register_interaction(type: String ):
-	pass
+func sync():
+	var local = var_to_bytes_with_objects(MASTER_CARD_RECORD["LOCAL_PLAYAREA"])
+	var remote = var_to_bytes_with_objects(MASTER_CARD_RECORD["REMOTE_PLAYAREA"])
+	var obj = {
+		"local" : local,
+		"remote" : remote,
+		"round" : ROUND
+	}
+	await wait_for_open_connection_and_send_message(JSON.stringify(obj))
+	print("Attempting to sync")
 
-func sync_area(area: Node):
-	pass
+func replace_areas(data: PackedByteArray):
+	print(bytes_to_var_with_objects(data))

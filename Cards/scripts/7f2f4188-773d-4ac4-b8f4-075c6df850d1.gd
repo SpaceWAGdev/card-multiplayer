@@ -4,4 +4,4 @@ func attack(card):
 	card.data["health"] -= data["damage"]
 
 func handle_click(event: InputEvent):
-	pass
+	print("+1 Mana")
