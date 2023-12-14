@@ -17,9 +17,12 @@ var MASTER_LOCATION_RECORD: Dictionary = {
 	"REMOTE_PLAYAREA": null
 }
 
-var MAX_HAND_SIZE = 9
-var MAX_DECK_SIZE = 1024
-var MAX_PLAYAREA_SIZE = 5
+var MAX_SIZES: Dictionary = {
+	"LOCAL_HAND" = 9,
+	"LOCAL_DECK" = 1024,
+	"LOCAL_PLAYAREA" = 7,
+	"REMOTE_PLAYAREA" = 7
+}
 
 var ROUND = 0
 
@@ -36,7 +39,7 @@ func init_card_areas():
 func _process(_delta):
 	poll_ws()
 
-func init_ws(url: String = "wss://ws.postman-echo.com/raw"):
+func init_ws(url = "wss://ws.postman-echo.com/raw"):
 	socket.connect_to_url(url)
 	
 func poll_ws():
@@ -57,6 +60,9 @@ func poll_ws():
 		set_process(false) # Stop processing.
 
 func create_card_instance(uuid: String, check_for_duplicates = false, location : String  = "LOCAL_DECK"):
+	if MASTER_LOCATION_RECORD[location].get_child_count() > MAX_SIZES[location]:
+		print(location, " full! Exiting")
+		return
 	var data = get_card_data(uuid)
 	var card_image = load("res://Cards/card.tscn").instantiate()
 	card_image.set_meta("card_data", data)
@@ -77,18 +83,20 @@ func create_card_instance(uuid: String, check_for_duplicates = false, location :
 	var click_event = card_image.gui_input
 	click_event.connect(card_image.on_click)
 	
-	print("### create_card_instance: " + card_image.get_meta("card_data")["name"])
-	card_image.battlecry()
+	if location == "LOCAL_PLAYAREA":
+		card_image.battlecry()
+	
+	print("Instantiate ", data["name"], " in ", location )
 	
 func update_screen_area(Area: String):
 	for child in find_child(Area, true).get_children():
 		if child not in MASTER_CARD_RECORD[Area]:
 			MASTER_CARD_RECORD[Area].append(child)
-			print("Added " + child.name + " to " + Area + " record") 
+			print("Added " + child.get_meta("card_data")["name"] + " to " + Area + " record") 
 	for child in MASTER_CARD_RECORD[Area]:
 		if child not in find_child(Area, true).get_children():
 			MASTER_CARD_RECORD[Area].erase(child)
-			print("Removed " + child.name + " from " +  Area)
+			print("Removed " + child.get_meta("card_data")["name"] + " from " +  Area)
 
 func get_card_data(uuid: String):
 	var card_list = JSON.parse_string((Helpers.load_text_file(("res://Cards/cards.json"))))
@@ -118,15 +126,13 @@ func move_card(card: Node, new_location: String):
 	new_location_node.add_child(card)
 	update_screen_area(card.get_parent().name)
 	update_screen_area(new_location_node.name)
+	if new_location == "LOCAL_PLAYAREA":
+		card.battlecry()
 	print(new_location_node.name, new_location_node.get_children())
 
 func _dbg_spawn_card():
 	load_deck("default_deck")
 	return
-	if randi_range(0, 1) == 0:
-		create_card_instance("3964a6c8-325f-46e2-8dda-595cec5c7d4f")
-	else:
-		create_card_instance("8d056e3e-8555-11ee-b9d1-0242ac120002")
 
 func finish_round():
 	ROUND += 1
@@ -135,4 +141,7 @@ func start_round():
 	pass
 	
 func register_interaction(type: String ):
+	pass
+
+func sync_area(area: Node):
 	pass

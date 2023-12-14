@@ -28,5 +28,15 @@
 		"damage": 0,
 		"class": "Zauber",
 		"tooltip": ""
-	} 
+	},
+	"546f1255-432f-470e-b5b4-0bdcdec830fb" : {
+		"uuid" : "546f1255-432f-470e-b5b4-0bdcdec830fb",
+		"type" : "entity",
+		"name" : "Der Wind",
+		"health" : 25,
+		"mana" : 0,
+		"damage" : 2,
+		"class" : "Leader",
+		"tooltip" : ""
+	}
 }
