@@ -38,5 +38,15 @@
 		"damage" : 2,
 		"class" : "Leader",
 		"tooltip" : ""
+	},
+	"079b8040-9b52-11ee-b9d1-0242ac120002" : {
+		"uuid" : "079b8040-9b52-11ee-b9d1-0242ac120002",
+		"type": "entity",
+		"name" : "Lia",
+		"health" : 15,
+		"mana" : 5,
+		"damage": 2,
+		"class": "Barde",
+		"tooltip" : ""
 	}
 }

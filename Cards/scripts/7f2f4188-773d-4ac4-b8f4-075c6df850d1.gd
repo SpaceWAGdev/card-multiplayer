@@ -5,3 +5,4 @@ func attack(card):
 
 func handle_click(event: InputEvent):
 	print("+1 Mana")
+	game_manager.move_card(self, "LOCAL_GRAVEYARD")
