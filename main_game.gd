@@ -158,7 +158,7 @@ func _dbg_spawn_card():
 
 func finish_round():
 	ROUND += 1
-	sync()
+	$VBoxContainer/DebugUI/RoundCounter.text = str(ROUND)
 
 func start_round():
 	ROUND += 1
@@ -177,4 +177,11 @@ func sync():
 
 func replace_areas(data: PackedByteArray):
 	print(bytes_to_var_with_objects(data))
+	
+
+func reset_game():
+	for key in MASTER_LOCATION_RECORD.keys(): 
+		for child in MASTER_LOCATION_RECORD[key].get_children(): 
+			MASTER_LOCATION_RECORD[key].remove_child(child)
+		update_screen_area(key)
 	

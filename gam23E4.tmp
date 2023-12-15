@@ -30,11 +30,6 @@ layout_mode = 2
 text = "END TURN"
 flat = true
 
-[node name="RemoveCards" type="Button" parent="VBoxContainer/DebugUI"]
-layout_mode = 2
-text = "END TURN"
-flat = true
-
 [node name="RoundCounter" type="Label" parent="VBoxContainer/DebugUI"]
 layout_mode = 2
 
@@ -65,4 +60,3 @@ unique_name_in_owner = true
 
 [connection signal="pressed" from="VBoxContainer/DebugUI/SpawnButton" to="." method="_dbg_spawn_card"]
 [connection signal="pressed" from="VBoxContainer/DebugUI/EndTurnButton" to="." method="finish_round"]
-[connection signal="pressed" from="VBoxContainer/DebugUI/RemoveCards" to="." method="reset_game"]
