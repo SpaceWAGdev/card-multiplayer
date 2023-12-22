@@ -168,6 +168,8 @@ func move_card(card: Node, new_location: String):
 	update_screen_area(new_location_node.name)
 	if new_location == "LOCAL_PLAYAREA":
 		card.battlecry()
+	if new_location == "LOCAL_GRAVEYARD":
+		card.z_index = -10 
 	print(new_location_node.name, new_location_node.get_children())
 
 func _dbg_spawn_card():
