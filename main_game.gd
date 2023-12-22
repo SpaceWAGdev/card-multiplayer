@@ -53,6 +53,7 @@ func poll_ws():
 		while socket.get_available_packet_count():
 			var packet = socket.get_packet()
 			print("Packet: ", packet.get_string_from_utf8())
+			deserialize_card(packet)
 			return packet			
 	elif state == WebSocketPeer.STATE_CLOSING:
 		# Keep polling to achieve proper close.
@@ -72,7 +73,7 @@ func wait_for_open_connection_and_send_message(message):
 	while current_attempt < max_number_of_attempts:
 		if socket.get_ready_state() == socket.STATE_OPEN:
 			# Send the message once the connection is open
-			socket.send_text(message)
+			socket.send(message)
 			return true
 			
 		current_attempt += 1
@@ -92,7 +93,12 @@ func serialize_card(card: Node):
 	
 func deserialize_card(bytes: PackedByteArray):
 	var obj = bytes_to_var_with_objects(bytes)
+	if obj == null or len(obj) == 0:
+		printerr("Deserialization Error")
+		return
 	print("Deserialized: ", obj)
+	clear_area("REMOTE_PLAYAREA")
+	create_card_instance(obj[0]["data"]["uuid"], false, "REMOTE_PLAYAREA", obj[0]["mid"])
 
 func create_card_instance(uuid: String, check_for_duplicates = false, location = "LOCAL_DECK", mid : String = ""):
 	if MASTER_LOCATION_RECORD[location].get_child_count() > MAX_SIZES[location]:
@@ -192,10 +198,7 @@ func sync():
 	for card in MASTER_LOCATION_RECORD["LOCAL_PLAYAREA"].get_children():
 		to_sync.append(serialize_card(card))
 	var bytes = var_to_bytes_with_objects(to_sync)
-	
-	clear_area("REMOTE_PLAYAREA")
-	for card in bytes_to_var_with_objects(bytes):
-		create_card_instance(card["data"]["uuid"], false, "REMOTE_PLAYAREA", card["mid"])
+	wait_for_open_connection_and_send_message(bytes)
 	
 func replace_areas(data: PackedByteArray):
 	print(bytes_to_var_with_objects(data))

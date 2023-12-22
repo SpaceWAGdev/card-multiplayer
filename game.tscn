@@ -60,13 +60,19 @@ layout_mode = 2
 text = "CLEAR"
 flat = true
 
-[node name="Sync" type="Button" parent="VBoxContainer/DebugUI"]
+[node name="SyncButton" type="Button" parent="VBoxContainer/DebugUI"]
 layout_mode = 2
 text = "SYNC"
 flat = true
 
 [node name="RoundCounter" type="Label" parent="VBoxContainer/DebugUI"]
 layout_mode = 2
+
+[node name="LineEdit2" type="LineEdit" parent="VBoxContainer/DebugUI"]
+layout_mode = 2
+placeholder_text = "ws://localhost:8765"
+expand_to_text_length = true
+virtual_keyboard_type = 7
 
 [node name="REMOTE_PLAYAREA" type="HBoxContainer" parent="VBoxContainer"]
 unique_name_in_owner = true
@@ -91,4 +97,5 @@ alignment = 1
 [connection signal="pressed" from="VBoxContainer/DebugUI/SpawnButton2" to="." method="_dbg_spawn_card"]
 [connection signal="pressed" from="VBoxContainer/DebugUI/EndTurnButton" to="." method="finish_round"]
 [connection signal="pressed" from="VBoxContainer/DebugUI/RemoveCards" to="." method="reset_game"]
-[connection signal="pressed" from="VBoxContainer/DebugUI/Sync" to="." method="_dbg_sync"]
+[connection signal="pressed" from="VBoxContainer/DebugUI/SyncButton" to="." method="_dbg_sync"]
+[connection signal="text_submitted" from="VBoxContainer/DebugUI/LineEdit2" to="." method="init_ws"]

@@ -9,7 +9,7 @@ async def server(websocket, path):
             print(f"Received message from {websocket.remote_address}: {message}")
 
             # Echo the message back to the client
-            await websocket.send(f"Echo: {message}")
+            await websocket.send(message)
 
     except websockets.exceptions.ConnectionClosedError as e:
         print(f"Connection closed with error: {e}")
