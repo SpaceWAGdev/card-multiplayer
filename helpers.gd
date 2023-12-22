@@ -1,4 +1,8 @@
 extends Node
+const uuid_util = reload('res://uuid.gd')
+
+func _init():
+	print(uuid_util.v4())
 
 static func load_text_file(path):
 	var file = FileAccess.open(path, FileAccess.READ)
@@ -7,3 +11,6 @@ static func load_text_file(path):
 	var text = file.get_as_text()
 	file.close()
 	return text
+
+static func generate_uuid():
+	return uuid_util.v4()

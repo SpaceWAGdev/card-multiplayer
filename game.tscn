@@ -13,6 +13,22 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_646wj")
 
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 2
+color = Color(0.12549, 0.207843, 0.207843, 1)
+
+[node name="BoxContainer" type="BoxContainer" parent="ColorRect"]
+z_index = -10
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="LOCAL_DECK" type="Node" parent="ColorRect/BoxContainer"]
+unique_name_in_owner = true
+
+[node name="LOCAL_GRAVEYARD" type="Node" parent="ColorRect/BoxContainer"]
+unique_name_in_owner = true
+
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 theme_override_constants/separation = 30
@@ -56,12 +72,6 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 alignment = 1
-
-[node name="LOCAL_DECK" type="Node" parent="VBoxContainer"]
-unique_name_in_owner = true
-
-[node name="LOCAL_GRAVEYARD" type="Node" parent="VBoxContainer"]
-unique_name_in_owner = true
 
 [connection signal="pressed" from="VBoxContainer/DebugUI/SpawnButton" to="." method="_dbg_spawn_card"]
 [connection signal="pressed" from="VBoxContainer/DebugUI/EndTurnButton" to="." method="finish_round"]

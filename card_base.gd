@@ -12,6 +12,8 @@ func battlecry():
 	
 func on_click(event: InputEvent):
 	if event.is_pressed():
+		if event.alt_pressed and self.get_parent().name == "LOCAL_HAND":
+			game_manager.move_card(self, "LOCAL_GRAVEYARD")
 		print("Click on " + self.data["name"])
 		handle_click(event)
 	else:

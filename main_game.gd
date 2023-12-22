@@ -35,10 +35,10 @@ func _ready():
 
 func init_card_areas():
 	MASTER_LOCATION_RECORD["LOCAL_HAND"] = get_node("VBoxContainer/LOCAL_HAND")
-	MASTER_LOCATION_RECORD["LOCAL_DECK"] = get_node("VBoxContainer/LOCAL_DECK")
+	MASTER_LOCATION_RECORD["LOCAL_DECK"] = get_node("ColorRect/BoxContainer/LOCAL_DECK")
 	MASTER_LOCATION_RECORD["LOCAL_PLAYAREA"] = get_node("VBoxContainer/LOCAL_PLAYAREA")
 	MASTER_LOCATION_RECORD["REMOTE_PLAYAREA"] = get_node("VBoxContainer/REMOTE_PLAYAREA")
-	MASTER_LOCATION_RECORD["LOCAL_GRAVEYARD"] = get_node("VBoxContainer/LOCAL_GRAVEYARD")
+	MASTER_LOCATION_RECORD["LOCAL_GRAVEYARD"] = get_node("ColorRect/BoxContainer/LOCAL_GRAVEYARD")
 
 func _process(_delta):
 	poll_ws()
@@ -80,7 +80,21 @@ func wait_for_open_connection_and_send_message(message):
 
 	return false
 
-func create_card_instance(uuid: String, check_for_duplicates = false, location : String  = "LOCAL_DECK"):
+func serialize_card(card: Node):
+	var data : Dictionary = card.get_meta("card_data")
+	var uuid: String = data["uuid"]
+	var mid : String = card.get_meta("mid")
+	var to_serialize = {
+		"data": data,
+		"uuid": uuid,
+		"mid": mid
+	}
+	return JSON.stringify(to_serialize)
+	
+func deserialize_card(json: String):
+	pass
+
+func create_card_instance(uuid: String, check_for_duplicates = false, location = "LOCAL_DECK", mid : String = ""):
 	if MASTER_LOCATION_RECORD[location].get_child_count() > MAX_SIZES[location]:
 		print(location, " full! Exiting")
 		return
@@ -89,10 +103,14 @@ func create_card_instance(uuid: String, check_for_duplicates = false, location :
 	card_image.set_meta("card_data", data)
 	var script = load("res://Cards/scripts/" + data["uuid"] + ".gd")
 	var img = load("res://Cards/images/"+ data["uuid"] + ".png")
+	if mid == "":
+		mid = Helpers.generate_uuid()
+	card_image.set_meta("mid", mid)
 	if img == null:
 		img = load("res://Cards/images/Image-1.jpg")
 	card_image.texture = img
 	card_image.script = script
+	
 	
 	if card_image in MASTER_CARD_RECORD[location] and check_for_duplicates:
 		return
@@ -159,26 +177,22 @@ func _dbg_spawn_card():
 func finish_round():
 	ROUND += 1
 	$VBoxContainer/DebugUI/RoundCounter.text = str(ROUND)
+	sync()
 
 func start_round():
 	ROUND += 1
 	pass
 	
 func sync():
-	var local = var_to_bytes_with_objects(MASTER_CARD_RECORD["LOCAL_PLAYAREA"])
-	var remote = var_to_bytes_with_objects(MASTER_CARD_RECORD["REMOTE_PLAYAREA"])
-	var obj = {
-		"local" : local,
-		"remote" : remote,
-		"round" : ROUND
-	}
-	await wait_for_open_connection_and_send_message(JSON.stringify(obj))
 	print("Attempting to sync")
-
+	var to_sync = []
+	for card in MASTER_LOCATION_RECORD["LOCAL_PLAYAREA"].get_children():
+		to_sync.append(serialize_card(card))
+	print(JSON.stringify(to_sync))
+	
 func replace_areas(data: PackedByteArray):
 	print(bytes_to_var_with_objects(data))
 	
-
 func reset_game():
 	for key in MASTER_LOCATION_RECORD.keys(): 
 		for child in MASTER_LOCATION_RECORD[key].get_children(): 
