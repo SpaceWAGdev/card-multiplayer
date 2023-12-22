@@ -1,3 +1,4 @@
+#Lia
 extends CardBase
 
 func attack(card):

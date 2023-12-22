@@ -173,8 +173,7 @@ func move_card(card: Node, new_location: String):
 	print(new_location_node.name, new_location_node.get_children())
 
 func _dbg_spawn_card():
-	load_deck("deck1")
-	return
+	load_deck("deck"+$VBoxContainer/DebugUI/LineEdit.text)
 
 func _dbg_sync():
 	sync()
