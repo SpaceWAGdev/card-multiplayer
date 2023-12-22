@@ -179,7 +179,6 @@ func _dbg_spawn_card():
 func _dbg_sync():
 	sync()
 
-
 func finish_round():
 	ROUND += 1
 	$VBoxContainer/DebugUI/RoundCounter.text = str(ROUND)
