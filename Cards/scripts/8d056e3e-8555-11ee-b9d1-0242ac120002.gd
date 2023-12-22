@@ -1,3 +1,4 @@
+#Sharif
 extends CardBase
 
 func attack(card):

@@ -1,3 +1,4 @@
+#MAGISCHES BROKKOLI
 extends CardBase
 
 func attack(card):
