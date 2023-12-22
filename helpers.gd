@@ -1,5 +1,5 @@
-extends Node
-const uuid_util = reload('res://uuid.gd')
+extends Node	
+const uuid_util = preload("res://addons/uuid/uuid.gd")
 
 func _init():
 	print(uuid_util.v4())
