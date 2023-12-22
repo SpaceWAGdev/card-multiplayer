@@ -84,15 +84,15 @@ func serialize_card(card: Node):
 	var data : Dictionary = card.get_meta("card_data")
 	var uuid: String = data["uuid"]
 	var mid : String = card.get_meta("mid")
-	var to_serialize = {
+	return {
 		"data": data,
 		"uuid": uuid,
 		"mid": mid
 	}
-	return JSON.stringify(to_serialize)
 	
-func deserialize_card(json: String):
-	pass
+func deserialize_card(bytes: PackedByteArray):
+	var obj = bytes_to_var_with_objects(bytes)
+	print("Deserialized: ", obj)
 
 func create_card_instance(uuid: String, check_for_duplicates = false, location = "LOCAL_DECK", mid : String = ""):
 	if MASTER_LOCATION_RECORD[location].get_child_count() > MAX_SIZES[location]:
@@ -110,7 +110,6 @@ func create_card_instance(uuid: String, check_for_duplicates = false, location =
 		img = load("res://Cards/images/Image-1.jpg")
 	card_image.texture = img
 	card_image.script = script
-	
 	
 	if card_image in MASTER_CARD_RECORD[location] and check_for_duplicates:
 		return
@@ -192,7 +191,11 @@ func sync():
 	var to_sync = []
 	for card in MASTER_LOCATION_RECORD["LOCAL_PLAYAREA"].get_children():
 		to_sync.append(serialize_card(card))
-	print(JSON.stringify(to_sync))
+	var bytes = var_to_bytes_with_objects(to_sync)
+	
+	clear_area("REMOTE_PLAYAREA")
+	for card in bytes_to_var_with_objects(bytes):
+		create_card_instance(card["data"]["uuid"], false, "REMOTE_PLAYAREA", card["mid"])
 	
 func replace_areas(data: PackedByteArray):
 	print(bytes_to_var_with_objects(data))
@@ -203,3 +206,7 @@ func reset_game():
 			MASTER_LOCATION_RECORD[key].remove_child(child)
 		update_screen_area(key)
 	
+func clear_area(area: String):
+	for child in MASTER_LOCATION_RECORD[area].get_children():
+		MASTER_LOCATION_RECORD[area].remove_child(child)
+		child.queue_free()

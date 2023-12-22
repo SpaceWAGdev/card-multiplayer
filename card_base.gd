@@ -11,7 +11,7 @@ func battlecry():
 	print(data["name"], " has no battlecry")
 	
 func on_click(event: InputEvent):
-	if self.get_parent().name == "LOCAL_GRAVEYARD":
+	if self.get_parent().name in ["LOCAL_GRAVEYARD", "REMOTE_PLAYAREA"]:
 		return
 	if event.is_pressed():
 		if event.alt_pressed and self.get_parent().name == "LOCAL_HAND" and not data["class"] == "Leader":
