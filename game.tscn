@@ -38,7 +38,7 @@ layout_mode = 2
 
 [node name="SpawnButton" type="Button" parent="VBoxContainer/DebugUI"]
 layout_mode = 2
-text = "SPAWN CARD"
+text = "SPAWN DECK"
 flat = true
 
 [node name="SpawnButton2" type="Button" parent="VBoxContainer/DebugUI"]
@@ -53,7 +53,12 @@ flat = true
 
 [node name="RemoveCards" type="Button" parent="VBoxContainer/DebugUI"]
 layout_mode = 2
-text = "END TURN"
+text = "CLEAR"
+flat = true
+
+[node name="Sync" type="Button" parent="VBoxContainer/DebugUI"]
+layout_mode = 2
+text = "SYNC"
 flat = true
 
 [node name="RoundCounter" type="Label" parent="VBoxContainer/DebugUI"]
@@ -82,3 +87,4 @@ alignment = 1
 [connection signal="pressed" from="VBoxContainer/DebugUI/SpawnButton2" to="." method="_dbg_spawn_card"]
 [connection signal="pressed" from="VBoxContainer/DebugUI/EndTurnButton" to="." method="finish_round"]
 [connection signal="pressed" from="VBoxContainer/DebugUI/RemoveCards" to="." method="reset_game"]
+[connection signal="pressed" from="VBoxContainer/DebugUI/Sync" to="." method="_dbg_sync"]
