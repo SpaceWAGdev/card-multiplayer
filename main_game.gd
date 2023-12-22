@@ -98,13 +98,13 @@ func deserialize_card(bytes: PackedByteArray):
 		return
 	print("Deserialized: ", obj)
 	clear_area("REMOTE_PLAYAREA")
-	create_card_instance(obj[0]["data"]["uuid"], false, "REMOTE_PLAYAREA", obj[0]["mid"])
+	for card in obj:
+		create_card_instance(card["data"], false, "REMOTE_PLAYAREA", card["mid"])
 
-func create_card_instance(uuid: String, check_for_duplicates = false, location = "LOCAL_DECK", mid : String = ""):
+func create_card_instance(data: Dictionary, check_for_duplicates = false, location = "LOCAL_DECK", mid : String = ""):
 	if MASTER_LOCATION_RECORD[location].get_child_count() > MAX_SIZES[location]:
 		print(location, " full! Exiting")
 		return
-	var data = get_card_data(uuid)
 	var card_image = load("res://Cards/card.tscn").instantiate()
 	card_image.set_meta("card_data", data)
 	var script = load("res://Cards/scripts/" + data["uuid"] + ".gd")
@@ -151,9 +151,9 @@ func get_card_data(uuid: String):
 
 func load_deck(deck_name: String):
 	var deck = JSON.parse_string(Helpers.load_text_file("res://Decks/" + deck_name + ".json"))
-	create_card_instance(deck["leader"])
+	create_card_instance(get_card_data(deck["leader"]))
 	for card in deck["cards"]:
-		create_card_instance(card)
+		create_card_instance(get_card_data(card))
 	for child in MASTER_LOCATION_RECORD["LOCAL_DECK"].get_children():
 		if child.get_meta("card_data")["class"] == "leader":
 			move_card(child, "LOCAL_CHARACTER")
