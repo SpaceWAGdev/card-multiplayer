@@ -53,6 +53,8 @@ func poll_ws():
 		while socket.get_available_packet_count():
 			var packet = socket.get_packet()
 			print("Packet: ", packet.get_string_from_utf8())
+			if packet.get_string_from_utf8().contains("ROUNDOVER"):
+				GameState.begin_turn()
 			deserialize_card(packet)
 			return packet			
 	elif state == WebSocketPeer.STATE_CLOSING:
@@ -180,12 +182,16 @@ func move_card(card: Node, new_location: String):
 func _dbg_spawn_card():
 	load_deck("deck"+$VBoxContainer/DebugUI/LineEdit.text)
 
+func _dbg_begin():
+	GameState.set_game_state(GameState.STATE_LOCALTURN)
+
 func _dbg_sync():
 	sync()
 
 func finish_round():
 	ROUND += 1
 	$VBoxContainer/DebugUI/RoundCounter.text = str(ROUND)
+	wait_for_open_connection_and_send_message("ROUNDOVER\n".to_utf8_buffer())
 	sync()
 
 func start_round():
@@ -213,3 +219,4 @@ func clear_area(area: String):
 	for child in MASTER_LOCATION_RECORD[area].get_children():
 		MASTER_LOCATION_RECORD[area].remove_child(child)
 		child.queue_free()
+

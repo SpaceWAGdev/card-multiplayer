@@ -3,3 +3,9 @@
 [node name="card" type="TextureRect"]
 expand_mode = 3
 stretch_mode = 4
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "10"

@@ -19,3 +19,4 @@ config/icon="res://icon.svg"
 [autoload]
 
 Helpers="*res://helpers.gd"
+GameState="*res://static_game_state.gd"

@@ -55,6 +55,11 @@ layout_mode = 2
 text = "END TURN"
 flat = true
 
+[node name="StartButton" type="Button" parent="VBoxContainer/DebugUI"]
+layout_mode = 2
+text = "START (ONLY ONE)"
+flat = true
+
 [node name="RemoveCards" type="Button" parent="VBoxContainer/DebugUI"]
 layout_mode = 2
 text = "CLEAR"
@@ -96,6 +101,7 @@ alignment = 1
 [connection signal="pressed" from="VBoxContainer/DebugUI/SpawnButton" to="." method="_dbg_spawn_card"]
 [connection signal="pressed" from="VBoxContainer/DebugUI/SpawnButton2" to="." method="_dbg_spawn_card"]
 [connection signal="pressed" from="VBoxContainer/DebugUI/EndTurnButton" to="." method="finish_round"]
+[connection signal="pressed" from="VBoxContainer/DebugUI/StartButton" to="." method="_dbg_begin"]
 [connection signal="pressed" from="VBoxContainer/DebugUI/RemoveCards" to="." method="reset_game"]
 [connection signal="pressed" from="VBoxContainer/DebugUI/SyncButton" to="." method="_dbg_sync"]
 [connection signal="text_submitted" from="VBoxContainer/DebugUI/LineEdit2" to="." method="init_ws"]
