@@ -20,7 +20,9 @@ func on_click(event: InputEvent):
 	if event.is_pressed():
 		if GameState.GAME_MODE == GameState.MODE_SELECT and GameState.SELECT_CALLBACK.get_object().name != self.name:
 			GameState.SELECT_CALLBACK.call(self)
-		if event.alt_pressed and self.get_parent().name == "LOCAL_HAND" and not data["class"] == "Leader":
+		if data["class"] == "Leader":
+			return
+		if event.alt_pressed and self.get_parent().name == "LOCAL_HAND":
 			game_manager.move_card(self, "LOCAL_GRAVEYARD") 
 		if self.get_parent().name == "LOCAL_PLAYAREA" and GameState.GAME_STATE == GameState.STATE_LOCALTURN:
 			GameState.get_card_selection(attack)
@@ -32,6 +34,7 @@ func on_click(event: InputEvent):
 
 func attack(card: CardBase):
 	print('Attacking %s from %s'.format(card.name, name))
+	card.data["health"] = card.data["health"] - data["damage"]
 	
 func play(_event: InputEvent):
 	get_tree().root.get_node("PanelContainer").move_card(self, "LOCAL_PLAYAREA")

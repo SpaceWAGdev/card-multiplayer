@@ -43,9 +43,14 @@ func init_card_areas():
 func _process(_delta):
 	poll_ws()
 
-func init_ws(url = "ws://localhost:8765"):
+func init_ws(url = ""):
+	url = "ws://localhost:8765"
 	socket.connect_to_url(url)
-	
+
+func connect_ws(url: String):
+	socket.close(-999, "Reset")
+	socket.connect_to_url(url)	
+
 func poll_ws():
 	socket.poll()
 	var state = socket.get_ready_state()

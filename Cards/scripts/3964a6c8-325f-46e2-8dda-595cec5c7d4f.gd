@@ -1,9 +1,5 @@
 # JAKOB
 extends CardBase
-func attack(card):
-	card["health"] -= data["damage"]
-	print("%s attacked %s".format(self.name, card.name))
-	return card
 
 func battlecry():
 	print(data["name"]+ "'s custom Battlecry")

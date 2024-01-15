@@ -1,14 +1,4 @@
 {
-	"5c7031f0-8555-11ee-b9d1-0242ac120002" : {
-		"uuid": "5c7031f0-8555-11ee-b9d1-0242ac120002",
-		"name": "Noah",
-		"health": 10,
-		"mana": 3
-	},
-	"8d056e3e-8555-11ee-b9d1-0242ac120002" : {
-		"uuid": "8d056e3e-8555-11ee-b9d1-0242ac120002",
-		"name": "Herr Sharifian",
-		"health": 9,
-		"mana": 2
-	}
+  "d": "d",
+  "f": "f"
 }
