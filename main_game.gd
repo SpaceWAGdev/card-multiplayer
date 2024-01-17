@@ -43,13 +43,19 @@ func init_card_areas():
 func _process(_delta):
 	poll_ws()
 
-func init_ws(url = ""):
-	url = "ws://localhost:8765"
+func init_ws(url = "ws://localhost:8765"):
 	socket.connect_to_url(url)
 
-func connect_ws(url: String):
-	socket.close(-999, "Reset")
-	socket.connect_to_url(url)	
+func connect_ws(url = "ws://localhost:8765"):
+	print("Connecting to " + url)
+	if socket.get_ready_state() == socket.STATE_OPEN:
+		socket.close(1002)
+	socket = WebSocketPeer.new()
+	socket.connect_to_url(url)
+	print(socket.get_ready_state())
+	
+func disconnect_ws(code = 1000):
+	socket.close(code, "Manual Disconnect")
 
 func poll_ws():
 	socket.poll()
@@ -74,9 +80,7 @@ func poll_ws():
 func wait_for_open_connection_and_send_message(message):
 	var max_number_of_attempts = 10
 	var interval_time = 0.2  # seconds
-
 	var current_attempt = 0
-
 	while current_attempt < max_number_of_attempts:
 		if socket.get_ready_state() == socket.STATE_OPEN:
 			# Send the message once the connection is open
@@ -224,4 +228,7 @@ func clear_area(area: String):
 	for child in MASTER_LOCATION_RECORD[area].get_children():
 		MASTER_LOCATION_RECORD[area].remove_child(child)
 		child.queue_free()
-
+		
+func _notification(what):
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		disconnect_ws(1002)
