@@ -44,7 +44,7 @@ func _process(_delta):
 	poll_ws()
 
 func init_ws():
-	$VBoxContainer/DebugUI/LineEdit2.placeholder_text = GameState.WS_SERVER_URL
+	$VBoxContainer/DebugUI/LineEdit2.text = GameState.WS_SERVER_URL
 	socket.connect_to_url(GameState.WS_SERVER_URL)
 
 func connect_ws():
