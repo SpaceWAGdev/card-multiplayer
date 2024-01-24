@@ -47,10 +47,11 @@ func init_ws():
 	$VBoxContainer/DebugUI/LineEdit2.text = GameState.WS_SERVER_URL
 	socket.connect_to_url(GameState.WS_SERVER_URL)
 
-func connect_ws():
-	$VBoxContainer/DebugUI/LineEdit2.select_all()
-	var url = $VBoxContainer/DebugUI/LineEdit2.get_selected_text()
-	$VBoxContainer/DebugUI/LineEdit2.deselect()
+func connect_ws(url = ""):
+	if url == "":
+		$VBoxContainer/DebugUI/LineEdit2.select_all()
+		url = $VBoxContainer/DebugUI/LineEdit2.get_selected_text()
+		$VBoxContainer/DebugUI/LineEdit2.deselect()
 	GameState.WS_SERVER_URL = url
 	get_tree().reload_current_scene()
 	

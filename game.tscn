@@ -109,7 +109,6 @@ alignment = 1
 [connection signal="pressed" from="VBoxContainer/DebugUI/StartButton" to="." method="_dbg_begin"]
 [connection signal="pressed" from="VBoxContainer/DebugUI/RemoveCards" to="." method="reset_game"]
 [connection signal="pressed" from="VBoxContainer/DebugUI/SyncButton" to="." method="_dbg_sync"]
-[connection signal="text_changed" from="VBoxContainer/DebugUI/LineEdit2" to="." method="connect_ws"]
 [connection signal="text_submitted" from="VBoxContainer/DebugUI/LineEdit2" to="." method="connect_ws"]
 [connection signal="pressed" from="VBoxContainer/DebugUI/Connect WS" to="." method="connect_ws"]
 [connection signal="pressed" from="VBoxContainer/DebugUI/Disconnect WS" to="." method="disconnect_ws"]
