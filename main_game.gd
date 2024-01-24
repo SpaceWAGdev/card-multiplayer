@@ -43,23 +43,15 @@ func init_card_areas():
 func _process(_delta):
 	poll_ws()
 
-func init_ws(url = "ws://localhost:8765"):
-	socket.connect_to_url(url)
+func init_ws():
+	socket.connect_to_url(GameState.WS_SERVER_URL)
 
-func connect_ws(url = "ws://localhost:8765"):
-	print("Connecting to " + url)
-	socket.close(1002, "Server Switch")
-	while (socket.get_ready_state() != socket.STATE_CLOSED):
-		if socket.get_ready_state() != socket.STATE_CLOSING:
-			continue
-		else:
-			print("Disconnecting")
-			socket.close(1002, "Server Switch")
-	socket.connect_to_url(url)
-	while (socket.get_ready_state() != socket.STATE_OPEN):
-		print("Connecting...")
-		continue
-	return true
+func connect_ws():
+	$VBoxContainer/DebugUI/LineEdit2.select_all()
+	var url = $VBoxContainer/DebugUI/LineEdit2.get_selected_text()
+	$VBoxContainer/DebugUI/LineEdit2.deselect()
+	GameState.WS_SERVER_URL = url
+	get_tree().reload_current_scene()
 	
 func disconnect_ws(code = 1000):
 	socket.close(code, "Manual Disconnect")

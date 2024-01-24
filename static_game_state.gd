@@ -15,6 +15,8 @@ enum {
 	MODE_SELECT
 }
 
+var WS_SERVER_URL = "ws://localhost:8765"
+
 var GAME_STATE = STATE_STARTING
 var GAME_MODE = MODE_DISABLED
 
