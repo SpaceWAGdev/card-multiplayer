@@ -15,10 +15,8 @@ func battlecry():
 func on_click(event: InputEvent):
 	if self.get_parent().name in ["LOCAL_GRAVEYARD"]:
 		return
-	if self.get_parent().name in ["REMOTE_PLAYAREA"]:
-		return
 	if event.is_pressed():
-		if GameState.GAME_MODE == GameState.MODE_SELECT and GameState.SELECT_CALLBACK.get_object().name != self.name:
+		if self.get_parent().name in ["REMOTE_PLAYAREA"] and GameState.GAME_MODE == GameState.MODE_SELECT:
 			GameState.SELECT_CALLBACK.call(self)
 		if data["class"] == "Leader":
 			return
@@ -26,7 +24,7 @@ func on_click(event: InputEvent):
 			game_manager.move_card(self, "LOCAL_GRAVEYARD") 
 		if self.get_parent().name == "LOCAL_PLAYAREA" and GameState.GAME_STATE == GameState.STATE_LOCALTURN:
 			GameState.get_card_selection(attack)
-		else: 
+		elif self.get_parent().name == "LOCAL_DECK":
 			play(event)	
 		print("Click on " + self.data["name"])
 	else:
