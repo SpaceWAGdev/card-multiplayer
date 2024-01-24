@@ -48,11 +48,18 @@ func init_ws(url = "ws://localhost:8765"):
 
 func connect_ws(url = "ws://localhost:8765"):
 	print("Connecting to " + url)
-	if socket.get_ready_state() == socket.STATE_OPEN:
-		socket.close(1002)
-	socket = WebSocketPeer.new()
+	socket.close(1002, "Server Switch")
+	while (socket.get_ready_state() != socket.STATE_CLOSED):
+		if socket.get_ready_state() != socket.STATE_CLOSING:
+			continue
+		else:
+			print("Disconnecting")
+			socket.close(1002, "Server Switch")
 	socket.connect_to_url(url)
-	print(socket.get_ready_state())
+	while (socket.get_ready_state() != socket.STATE_OPEN):
+		print("Connecting...")
+		continue
+	return true
 	
 func disconnect_ws(code = 1000):
 	socket.close(code, "Manual Disconnect")
@@ -191,7 +198,7 @@ func move_card(card: Node, new_location: String):
 func _dbg_spawn_card():
 	load_deck("deck"+$VBoxContainer/DebugUI/LineEdit.text)
 
-func _dbg_begin():
+func _dbg_begin():	
 	GameState.set_game_state(GameState.STATE_LOCALTURN)
 
 func _dbg_sync():

@@ -1,23 +1,28 @@
 import asyncio
 import websockets
+from hashlib import md5
 
 # Dictionary to store connected clients with their respective WebSocket objects
 connected_clients = {}
 
+
 async def server(websocket, path):
     print(f"Client connected: {websocket.remote_address}")
-
     # Add the new client to the dictionary of connected clients
     connected_clients[websocket.remote_address] = websocket
-
+    last_msg_hash = None
     try:
         async for message in websocket:
             print(f"Received message from {websocket.remote_address}: {message}")
 
             # Echo the message back to every other connected client
             for client_address, client in connected_clients.items():
-                if client_address != websocket.remote_address:
+                if (
+                    client_address != websocket.remote_address
+                    and md5(message) != last_msg_hash
+                ):
                     await client.send(message)
+            last_msg_hash = md5(message)
 
     except websockets.exceptions.ConnectionClosedError as e:
         print(f"Connection closed with error: {e}")
@@ -27,6 +32,7 @@ async def server(websocket, path):
 
         # Remove the disconnected client from the dictionary
         del connected_clients[websocket.remote_address]
+
 
 # Start the WebSocket server
 start_server = websockets.serve(server, "localhost", 8765)
