@@ -151,13 +151,15 @@ func create_card_instance(data: Dictionary, check_for_duplicates = false, locati
 	
 func update_screen_area(Area: String):
 	for child in find_child(Area, true).get_children():
+		if child == null:
+			printerr("CHILD NULL")
 		if child not in MASTER_CARD_RECORD[Area]:
 			MASTER_CARD_RECORD[Area].append(child)
 			print("Added " + child.get_meta("card_data")["name"] + " to " + Area + " record") 
 	for child in MASTER_CARD_RECORD[Area]:
 		if child not in find_child(Area, true).get_children():
-			MASTER_CARD_RECORD[Area].erase(child)
 			print("Removed " + child.get_meta("card_data")["name"] + " from " +  Area)
+			MASTER_CARD_RECORD[Area].erase(child)
 
 func get_card_data(uuid: String):
 	var card_list = JSON.parse_string((Helpers.load_text_file(("res://Cards/cards.json"))))
@@ -188,7 +190,7 @@ func move_card(card: Node, new_location: String):
 	new_location_node.add_child(card)
 	update_screen_area(card.get_parent().name)
 	update_screen_area(new_location_node.name)
-	if new_location == "LOCAL_PLAYAREA":
+	if new_location == "LOCAL_PLAYAREA" and old_parent.name == "LOCAL_HAND":
 		card.battlecry()
 	if new_location == "LOCAL_GRAVEYARD":
 		card.z_index = -10 
