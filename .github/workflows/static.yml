@@ -5,6 +5,9 @@ on:
   # Runs on pushes targeting the default branch
   push:
     branches: ["master"]
+    paths:
+      # only deploy on web build
+      - 'web-build/'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
