@@ -15,24 +15,31 @@ func battlecry():
 func on_click(event: InputEvent):
 	if self.get_parent().name in ["LOCAL_GRAVEYARD"]:
 		return
-	if event.is_pressed():
+	elif event.is_pressed():
 		if self.get_parent().name in ["REMOTE_PLAYAREA"] and GameState.GAME_MODE == GameState.MODE_SELECT:
 			GameState.SELECT_CALLBACK.call(self)
-		if data["class"] == "Leader":
+		elif data["class"] == "Leader":
 			return
-		if event.alt_pressed and self.get_parent().name == "LOCAL_HAND":
+		elif event.alt_pressed and self.get_parent().name == "LOCAL_HAND":
 			game_manager.move_card(self, "LOCAL_GRAVEYARD") 
-		if self.get_parent().name == "LOCAL_PLAYAREA" and GameState.GAME_STATE == GameState.STATE_LOCALTURN:
+		elif self.get_parent().name == "LOCAL_PLAYAREA" and GameState.GAME_STATE == GameState.STATE_LOCALTURN:
 			GameState.get_card_selection(attack)
-		elif self.get_parent().name == "LOCAL_DECK":
-			play(event)	
+		elif self.get_parent().name == "LOCAL_HAND":
+			play(event)
 		print("Click on " + self.data["name"])
 	else:
 		pass
 
 func attack(card: CardBase):
-	print('Attacking %s from %s'.format(card.name, name))
+	print('Attacking ' + card.data["name"] + ' from ' +  data["name"])
 	card.data["health"] = card.data["health"] - data["damage"]
+	card.update_stats()
+	if card.data["health"] <= 0:
+		game_manager.move_card(card, "LOCAL_GRAVEYARD")
 	
 func play(_event: InputEvent):
 	get_tree().root.get_node("PanelContainer").move_card(self, "LOCAL_PLAYAREA")
+
+func update_stats():
+	var health_label : Label =  get_children()[0]
+	health_label.text = str(data["health"])

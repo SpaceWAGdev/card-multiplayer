@@ -67,7 +67,8 @@ func poll_ws():
 			print("Packet: ", packet.get_string_from_utf8())
 			if packet.get_string_from_utf8().contains("ROUNDOVER"):
 				GameState.begin_turn()
-			deserialize_card(packet)
+			else:
+				deserialize_card(packet)
 			return packet			
 	elif state == WebSocketPeer.STATE_CLOSING:
 		# Keep polling to achieve proper close.
@@ -108,10 +109,12 @@ func deserialize_card(bytes: PackedByteArray):
 	if obj == null or len(obj) == 0:
 		printerr("Deserialization Error")
 		return
-	print("Deserialized: ", obj)
 	clear_area("REMOTE_PLAYAREA")
-	for card in obj:
+	clear_area("LOCAL_PLAYAREA")	
+	for card in obj["LOCAL_PLAYAREA"]:
 		create_card_instance(card["data"], false, "REMOTE_PLAYAREA", card["mid"])
+	for card in obj["REMOTE_PLAYAREA"]:
+		create_card_instance(card["data"], false, "LOCAL_PLAYAREA", card["mid"])
 
 func create_card_instance(data: Dictionary, check_for_duplicates = false, location = "LOCAL_DECK", mid : String = ""):
 	if MASTER_LOCATION_RECORD[location].get_child_count() > MAX_SIZES[location]:
@@ -121,9 +124,9 @@ func create_card_instance(data: Dictionary, check_for_duplicates = false, locati
 	card_image.set_meta("card_data", data)
 	var script = load("res://Cards/scripts/" + data["uuid"] + ".gd")
 	var img = load("res://Cards/images/"+ data["uuid"] + ".png")
-	if mid == "":
-		mid = Helpers.generate_uuid()
 	card_image.set_meta("mid", mid)
+	if mid == "":
+		card_image.set_meta("mid", Helpers.generate_uuid())
 	if img == null:
 		img = load("res://Cards/images/Image-1.jpg")
 	card_image.texture = img
@@ -139,9 +142,9 @@ func create_card_instance(data: Dictionary, check_for_duplicates = false, locati
 	var click_event = card_image.gui_input
 	click_event.connect(card_image.on_click)
 	
-	if location == "LOCAL_PLAYAREA":
+	if location == "LOCAL_PLAYAREA" and mid == "":
 		card_image.battlecry()
-	
+	card_image.update_stats()
 	print("Instantiated ", data["name"], " (Card Object) in ", location )
 	
 func update_screen_area(Area: String):
@@ -210,9 +213,14 @@ func start_round():
 	
 func sync():
 	print("Attempting to sync")
-	var to_sync = []
+	var to_sync = {
+		"LOCAL_PLAYAREA" : [],
+		"REMOTE_PLAYAREA" : []
+	}
 	for card in MASTER_LOCATION_RECORD["LOCAL_PLAYAREA"].get_children():
-		to_sync.append(serialize_card(card))
+		to_sync["LOCAL_PLAYAREA"].append(serialize_card(card))
+	for card in MASTER_LOCATION_RECORD["REMOTE_PLAYAREA"].get_children():
+		to_sync["REMOTE_PLAYAREA"].append(serialize_card(card))
 	var bytes = var_to_bytes_with_objects(to_sync)
 	wait_for_open_connection_and_send_message(bytes)
 	
