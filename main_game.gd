@@ -67,6 +67,8 @@ func poll_ws():
 			print("Packet: ", packet.get_string_from_utf8())
 			if packet.get_string_from_utf8().contains("ROUNDOVER"):
 				GameState.begin_turn()
+				ROUND += 1
+				$VBoxContainer/DebugUI/RoundCounter.text = str(ROUND)
 			else:
 				deserialize_card(packet)
 			return packet			

@@ -52,7 +52,7 @@ flat = true
 
 [node name="StartButton" type="Button" parent="VBoxContainer/DebugUI"]
 layout_mode = 2
-text = "START (ONLY ONE)"
+text = "BEGIN"
 flat = true
 
 [node name="RemoveCards" type="Button" parent="VBoxContainer/DebugUI"]
