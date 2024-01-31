@@ -22,8 +22,8 @@ var MASTER_LOCATION_RECORD: Dictionary = {
 var MAX_SIZES: Dictionary = {
 	"LOCAL_HAND" = 9,
 	"LOCAL_DECK" = 1024,
-	"LOCAL_PLAYAREA" = 7,
-	"REMOTE_PLAYAREA" = 7,
+	"LOCAL_PLAYAREA" = 5,
+	"REMOTE_PLAYAREA" = 5,
 	"LOCAL_GRAVEYARD" = 1024
 }
 
@@ -74,8 +74,10 @@ func poll_ws():
 			return packet			
 	elif state == WebSocketPeer.STATE_CLOSING:
 		# Keep polling to achieve proper close.
+		$"VBoxContainer/DebugUI/Connect WS".set("theme_override_colors/font_color", Color.RED)
 		pass
 	elif state == WebSocketPeer.STATE_CLOSED:
+		$"VBoxContainer/DebugUI/Connect WS".set("theme_override_colors/font_color", Color.RED)
 		var code = socket.get_close_code()
 		var reason = socket.get_close_reason()
 		print("WebSocket closed with code: %d, reason %s. Clean: %s" % [code, reason, code != -1])
@@ -87,6 +89,7 @@ func wait_for_open_connection_and_send_message(message):
 	var current_attempt = 0
 	while current_attempt < max_number_of_attempts:
 		if socket.get_ready_state() == socket.STATE_OPEN:
+			$"VBoxContainer/DebugUI/Connect WS".set("theme_override_colors/font_color", Color.GREEN_YELLOW)
 			# Send the message once the connection is open
 			socket.send(message)
 			return true
@@ -228,7 +231,7 @@ func sync():
 	var bytes = var_to_bytes_with_objects(to_sync)
 	wait_for_open_connection_and_send_message(bytes)
 	
-func replace_areas(data: PackedByteArray):
+func replace_areas(data: PackedByteArray): 
 	print(bytes_to_var_with_objects(data))
 	
 func reset_game():
@@ -244,4 +247,4 @@ func clear_area(area: String):
 		
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
-		disconnect_ws(1002)
+		disconnect_ws(1001)

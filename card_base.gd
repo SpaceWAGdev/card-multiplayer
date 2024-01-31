@@ -42,5 +42,5 @@ func play(_event: InputEvent):
 	get_tree().root.get_node("PanelContainer").move_card(self, "LOCAL_PLAYAREA")
 
 func update_stats():
-	var health_label : Label =  get_children()[0]
+	var health_label : Label = get_children()[0]
 	health_label.text = str(data["health"])

@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-
 <html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, user-scalable=no" name="viewport"/>
-<title>card-game</title>
-<style>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no">
+		<title>card-game</title>
+		<style>
 body {
 	touch-action: none;
 	margin: 0;
@@ -110,32 +109,34 @@ body {
 	visibility: visible;
 }
 		</style>
-<link href="cardgame.icon.png" id="-gd-engine-icon" rel="icon" type="image/png"/>
-<link href="cardgame.apple-touch-icon.png" rel="apple-touch-icon"/>
-<script src="enable-threads.js"></script></head>
-<body>
-<canvas id="canvas">
-			HTML5 canvas appears to be unsupported in the current browser.<br/>
+		<link id='-gd-engine-icon' rel='icon' type='image/png' href='cardgame.icon.png' />
+<link rel='apple-touch-icon' href='cardgame.apple-touch-icon.png'/>
+<script src="enable-threads.js">
+	</head>
+	<body>
+		<canvas id="canvas">
+			HTML5 canvas appears to be unsupported in the current browser.<br >
 			Please try updating or use a different browser.
 		</canvas>
-<div id="status">
-<div id="status-progress" oncontextmenu="event.preventDefault();" style="display: none;">
-<div id="status-progress-inner"></div>
-</div>
-<div id="status-indeterminate" oncontextmenu="event.preventDefault();" style="display: none;">
-<div></div>
-<div></div>
-<div></div>
-<div></div>
-<div></div>
-<div></div>
-<div></div>
-<div></div>
-</div>
-<div class="godot" id="status-notice" style="display: none;"></div>
-</div>
-<script src="cardgame.js"></script>
-<script>
+		<div id="status">
+			<div id="status-progress" style="display: none;" oncontextmenu="event.preventDefault();">
+				<div id ="status-progress-inner"></div>
+			</div>
+			<div id="status-indeterminate" style="display: none;" oncontextmenu="event.preventDefault();">
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+			</div>
+			<div id="status-notice" class="godot" style="display: none;"></div>
+		</div>
+
+		<script src="cardgame.js"></script>
+		<script>
 const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"executable":"cardgame","experimentalVK":false,"fileSizes":{"cardgame.pck":16651552,"cardgame.wasm":1758196},"focusCanvas":true,"gdextensionLibs":[]};
 const engine = new Engine(GODOT_CONFIG);
 
@@ -242,5 +243,6 @@ const engine = new Engine(GODOT_CONFIG);
 	}
 }());
 		</script>
-</body>
+	</body>
 </html>
+
