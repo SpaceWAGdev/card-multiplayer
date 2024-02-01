@@ -27,7 +27,7 @@ project/assembly_name="card-game"
 
 [editor_plugins]
 
-enabled=PackedStringArray()
+enabled=PackedStringArray("res://addons/card_multiplayer_json_editor/plugin.cfg")
 
 [rendering]
 
