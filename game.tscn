@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://c0u327em4e4cg"]
+[gd_scene load_steps=2 format=3 uid="uid://c0u327em4e4cg"]
 
 [ext_resource type="Script" path="res://main_game.gd" id="1_646wj"]
-[ext_resource type="Script" path="res://debug_screen_areas.gd" id="2_b6aun"]
 
 [node name="PanelContainer" type="PanelContainer"]
 anchors_preset = 15
@@ -90,7 +89,6 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 alignment = 1
-script = ExtResource("2_b6aun")
 
 [node name="LOCAL_PLAYAREA" type="HBoxContainer" parent="VBoxContainer"]
 unique_name_in_owner = true
