@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b51e8aokhek27"
-path="res://.godot/imported/Jakob.svg-e4d2d7e981830c7b086928224bf03034.ctex"
+uid="uid://dfsmy6txlu4v8"
+path="res://.godot/imported/Card Template.svg-ce876c91d394a905bbfcd9047dc63099.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Cards/Jakob.svg"
-dest_files=["res://.godot/imported/Jakob.svg-e4d2d7e981830c7b086928224bf03034.ctex"]
+source_file="res://Cards/svg/Card Template.svg"
+dest_files=["res://.godot/imported/Card Template.svg-ce876c91d394a905bbfcd9047dc63099.ctex"]
 
 [params]
 

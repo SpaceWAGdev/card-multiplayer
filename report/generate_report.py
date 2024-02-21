@@ -1,5 +1,6 @@
 #!/bin/env python3
 import git, json, time, sys, os
+
 return_lines = []
 repo = git.Repo("../")
 commits = repo.iter_commits()
@@ -12,16 +13,18 @@ for commit in commits:
     if commit.committed_date < (int(time.time()) - 604800) and not all_commits:
         continue
 
-    return_lines.append({
-        "author_username": commit.author.name,
-        "author_email": commit.author.email,
-        "datetime": commit.committed_date,
-        "hexsha": commit.hexsha,
-        "commit_message": commit.message.strip(),
-        "changes": commit.stats.total
-    })
+    return_lines.append(
+        {
+            "author_username": commit.author.name,
+            "author_email": commit.author.email,
+            "datetime": commit.committed_date,
+            "hexsha": commit.hexsha,
+            "commit_message": commit.message.strip(),
+            "changes": commit.stats.total,
+        }
+    )
 
 with open("commits.json", "w") as f:
     json.dump(return_lines, f)
 
-os.system(f"typst compile report.typ")
+os.system("typst compile report.typ")

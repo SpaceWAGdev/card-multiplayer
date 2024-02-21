@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bpvi6jtscd6ae"
-path="res://.godot/imported/Der Wind.svg-f6f777217d2756e75fbcc12a83f7a8bc.ctex"
+uid="uid://dbite07m5t1jj"
+path="res://.godot/imported/IMG_1318.JPEG-caa89f24a45b40cd31dbe30939c4104f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Cards/Der Wind.svg"
-dest_files=["res://.godot/imported/Der Wind.svg-f6f777217d2756e75fbcc12a83f7a8bc.ctex"]
+source_file="res://Cards/IMG_1318.JPEG"
+dest_files=["res://.godot/imported/IMG_1318.JPEG-caa89f24a45b40cd31dbe30939c4104f.ctex"]
 
 [params]
 
@@ -32,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

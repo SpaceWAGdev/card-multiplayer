@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://xldg62727dlf"
-path="res://.godot/imported/Magisches Brokkoli.svg-9f2acbec44ba7d3655870b8aea9941a8.ctex"
+uid="uid://cejdvseldibjs"
+path="res://.godot/imported/FullSizeRender.JPEG-1b7807ed44fa9a52a010316bdca0b6fe.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Cards/Magisches Brokkoli.svg"
-dest_files=["res://.godot/imported/Magisches Brokkoli.svg-9f2acbec44ba7d3655870b8aea9941a8.ctex"]
+source_file="res://Cards/FullSizeRender.JPEG"
+dest_files=["res://.godot/imported/FullSizeRender.JPEG-1b7807ed44fa9a52a010316bdca0b6fe.ctex"]
 
 [params]
 
@@ -32,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cejdvseldibjs"
-path="res://.godot/imported/FullSizeRender.JPEG-8b264927b6c74530590ff2f64bc4b70b.ctex"
+uid="uid://b51e8aokhek27"
+path="res://.godot/imported/Jakob.svg-f4e47417ebe6b1cf2c37e0309f5c9bd4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Cards/images/FullSizeRender.JPEG"
-dest_files=["res://.godot/imported/FullSizeRender.JPEG-8b264927b6c74530590ff2f64bc4b70b.ctex"]
+source_file="res://Cards/svg/Jakob.svg"
+dest_files=["res://.godot/imported/Jakob.svg-f4e47417ebe6b1cf2c37e0309f5c9bd4.ctex"]
 
 [params]
 
@@ -32,3 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

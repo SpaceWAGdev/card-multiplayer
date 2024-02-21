@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bavsvk6bfi44f"
-path="res://.godot/imported/Card Template - Kopie.svg-2596392c783633561c008e5c8294d768.ctex"
+uid="uid://u847vejrq4km"
+path="res://.godot/imported/umgebung test.svg-c46fc40dfae7bea08e19452719bd1d25.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Cards/Card Template - Kopie.svg"
-dest_files=["res://.godot/imported/Card Template - Kopie.svg-2596392c783633561c008e5c8294d768.ctex"]
+source_file="res://Cards/svg/umgebung test.svg"
+dest_files=["res://.godot/imported/umgebung test.svg-c46fc40dfae7bea08e19452719bd1d25.ctex"]
 
 [params]
 

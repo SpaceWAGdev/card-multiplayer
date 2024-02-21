@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://blw7mjjjqmxjg"
-path="res://.godot/imported/Shari Fari.svg-9d590ae315ef33d09913077d17a7b658.ctex"
+uid="uid://bwohepiw8t4yl"
+path="res://.godot/imported/IMG_1317.JPEG-26d8e93dfe96ef5cc61b045cc5346f4e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Cards/Shari Fari.svg"
-dest_files=["res://.godot/imported/Shari Fari.svg-9d590ae315ef33d09913077d17a7b658.ctex"]
+source_file="res://Cards/IMG_1317.JPEG"
+dest_files=["res://.godot/imported/IMG_1317.JPEG-26d8e93dfe96ef5cc61b045cc5346f4e.ctex"]
 
 [params]
 
@@ -32,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false
