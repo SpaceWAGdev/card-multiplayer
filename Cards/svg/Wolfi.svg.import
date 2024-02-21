@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b17hd4yuc8seb"
-path="res://.godot/imported/Card Template - Kopie.svg-a81d0ebc9c6c564fadd255410062aca3.ctex"
+uid="uid://c4grgehoi5d8m"
+path="res://.godot/imported/Wolfi.svg-be28b39dc5d198c4bfb8674b7e083cc7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Cards/svg/Card Template - Kopie.svg"
-dest_files=["res://.godot/imported/Card Template - Kopie.svg-a81d0ebc9c6c564fadd255410062aca3.ctex"]
+source_file="res://Cards/svg/Wolfi.svg"
+dest_files=["res://.godot/imported/Wolfi.svg-be28b39dc5d198c4bfb8674b7e083cc7.ctex"]
 
 [params]
 
