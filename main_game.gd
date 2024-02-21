@@ -177,8 +177,9 @@ func load_deck(deck_name: String):
 	for card in deck["cards"]:
 		create_card_instance(get_card_data(card))
 	for child in MASTER_LOCATION_RECORD["LOCAL_DECK"].get_children():
-		if child.get_meta("card_data")["class"] == "leader":
-			move_card(child, "LOCAL_CHARACTER")
+		if child.get_meta("card_data")["class"].contains("Leader"):
+			# move_card(child, "LOCAL_CHARACTER")
+			pass
 		else:
 			move_card(child, "LOCAL_HAND")
 	update_screen_area("LOCAL_HAND")

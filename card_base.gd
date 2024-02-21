@@ -19,7 +19,7 @@ func on_click(event: InputEvent):
 		if self.get_parent().name in ["REMOTE_PLAYAREA"] and GameState.GAME_MODE == GameState.MODE_SELECT:
 			GameState.SELECT_CALLBACK.call(self)
 			GameState.cancel_card_selection()
-		elif data["class"] == "Leader":
+		elif data["class"].contains("Leader"):
 			return
 		elif event.alt_pressed and self.get_parent().name == "LOCAL_HAND":
 			game_manager.move_card(self, "LOCAL_GRAVEYARD") 
