@@ -11,8 +11,13 @@ func setup(_data: Dictionary, _game_manager):
 
 func battlecry():
 	print(data["name"], " has no battlecry")
+
+func deathrattle():
+	print(data["name"], " has no deathrattle")
 	
 func on_click(event: InputEvent):
+	if GameState.GAME_STATE != GameState.STATE_LOCALTURN:
+		return
 	if self.get_parent().name in ["LOCAL_GRAVEYARD"]:
 		return
 	elif event.is_pressed():
@@ -25,7 +30,7 @@ func on_click(event: InputEvent):
 			game_manager.move_card(self, "LOCAL_GRAVEYARD") 
 		elif self.get_parent().name == "LOCAL_PLAYAREA" and GameState.GAME_STATE == GameState.STATE_LOCALTURN:
 			GameState.get_card_selection(attack)
-		elif self.get_parent().name == "LOCAL_HAND":
+		elif self.get_parent().name == "LOCAL_HAND" :
 			play(event)
 		print("Click on " + self.data["name"])
 	else:
@@ -33,9 +38,10 @@ func on_click(event: InputEvent):
 
 func attack(card: CardBase):
 	print('Attacking ' + card.data["name"] + ' from ' +  data["name"])
-	card.data["health"] = card.data["health"] - data["damage"]
+	card.data["health"] = int(card.data["health"]) - int(data["damage"])
 	card.update_stats()
 	if card.data["health"] <= 0:
+		self.deathrattle()
 		game_manager.move_card(card, "LOCAL_GRAVEYARD")
 	
 func play(_event: InputEvent):

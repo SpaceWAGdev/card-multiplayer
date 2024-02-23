@@ -152,17 +152,17 @@ func create_card_instance(data: Dictionary, check_for_duplicates = false, locati
 	card_image.update_stats()
 	print("Instantiated ", data["name"], " (Card Object) in ", location )
 	
-func update_screen_area(Area: String):
-	for child in find_child(Area, true).get_children():
+func update_screen_area(area: String):
+	for child in find_child(area, true).get_children():
 		if child == null:
 			printerr("CHILD NULL")
-		if child not in MASTER_CARD_RECORD[Area]:
-			MASTER_CARD_RECORD[Area].append(child)
-			print("Added " + child.get_meta("card_data")["name"] + " to " + Area + " record") 
-	for child in MASTER_CARD_RECORD[Area]:
-		if child not in find_child(Area, true).get_children():
-			print("Removed " + child.get_meta("card_data")["name"] + " from " +  Area)
-			MASTER_CARD_RECORD[Area].erase(child)
+		if child not in MASTER_CARD_RECORD[area]:
+			MASTER_CARD_RECORD[area].append(child)
+			# print("Added " + child.get_meta("card_data")["name"] + " to " + area + " record") 
+	for child in MASTER_CARD_RECORD[area]:
+		if child not in find_child(area, true).get_children():
+			# print("Removed " + child.get_meta("card_data")["name"] + " from " +  area)
+			MASTER_CARD_RECORD[area].erase(child)
 
 func get_card_data(uuid: String):
 	var card_list = JSON.parse_string((Helpers.load_text_file(("res://Cards/cards.json"))))
@@ -175,13 +175,10 @@ func load_deck(deck_name: String):
 	var deck = JSON.parse_string(Helpers.load_text_file("res://Decks/" + deck_name + ".json"))
 	create_card_instance(get_card_data(deck["leader"]))
 	for card in deck["cards"]:
+		print(card)
 		create_card_instance(get_card_data(card))
 	for child in MASTER_LOCATION_RECORD["LOCAL_DECK"].get_children():
-		if child.get_meta("card_data")["class"].contains("Leader"):
-			# move_card(child, "LOCAL_CHARACTER")
-			pass
-		else:
-			move_card(child, "LOCAL_HAND")
+		move_card(child, "LOCAL_HAND")
 	update_screen_area("LOCAL_HAND")
 	sync()
 
@@ -212,6 +209,7 @@ func _dbg_sync():
 func finish_round():
 	ROUND += 1
 	$VBoxContainer/DebugUI/RoundCounter.text = str(ROUND)
+	GameState.GAME_STATE = GameState.STATE_REMOTETURN
 	wait_for_open_connection_and_send_message("ROUNDOVER\n".to_utf8_buffer())
 	sync()
 
