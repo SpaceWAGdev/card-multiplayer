@@ -30,7 +30,7 @@ func on_click(event: InputEvent):
 			game_manager.move_card(self, "LOCAL_GRAVEYARD") 
 		elif self.get_parent().name == "LOCAL_PLAYAREA" and GameState.GAME_STATE == GameState.STATE_LOCALTURN:
 			GameState.get_card_selection(attack)
-		elif self.get_parent().name == "LOCAL_HAND" :
+		elif self.get_parent().name == "LOCAL_HAND" and int(data["mana"]) <= game_manager.MANA:
 			play(event)
 		print("Click on " + self.data["name"])
 	else:
@@ -45,6 +45,7 @@ func attack(card: CardBase):
 		game_manager.move_card(card, "LOCAL_GRAVEYARD")
 	
 func play(_event: InputEvent):
+	game_manager.MANA = game_manager.MANA - int(data["mana"])
 	get_tree().root.get_node("PanelContainer").move_card(self, "LOCAL_PLAYAREA")
 
 func update_stats():

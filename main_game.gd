@@ -28,6 +28,7 @@ var MAX_SIZES: Dictionary = {
 }
 
 var ROUND = 0
+var MANA = 0
 
 func _ready():
 	init_ws()
@@ -68,6 +69,7 @@ func poll_ws():
 			if packet.get_string_from_utf8().contains("ROUNDOVER"):
 				GameState.begin_turn()
 				ROUND += 1
+				MANA = ROUND
 				$VBoxContainer/DebugUI/RoundCounter.text = str(ROUND)
 			else:
 				deserialize_card(packet)
