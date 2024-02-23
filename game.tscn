@@ -54,14 +54,9 @@ layout_mode = 2
 text = "BEGIN"
 flat = true
 
-[node name="RemoveCards" type="Button" parent="VBoxContainer/DebugUI"]
+[node name="ClearButton" type="Button" parent="VBoxContainer/DebugUI"]
 layout_mode = 2
 text = "CLEAR"
-flat = true
-
-[node name="SyncButton" type="Button" parent="VBoxContainer/DebugUI"]
-layout_mode = 2
-text = "SYNC"
 flat = true
 
 [node name="RoundCounter" type="Label" parent="VBoxContainer/DebugUI"]
@@ -105,8 +100,7 @@ alignment = 1
 [connection signal="pressed" from="VBoxContainer/DebugUI/SpawnButton" to="." method="_dbg_spawn_card"]
 [connection signal="pressed" from="VBoxContainer/DebugUI/EndTurnButton" to="." method="finish_round"]
 [connection signal="pressed" from="VBoxContainer/DebugUI/StartButton" to="." method="_dbg_begin"]
-[connection signal="pressed" from="VBoxContainer/DebugUI/RemoveCards" to="." method="reset_game"]
-[connection signal="pressed" from="VBoxContainer/DebugUI/SyncButton" to="." method="_dbg_sync"]
+[connection signal="pressed" from="VBoxContainer/DebugUI/ClearButton" to="." method="reset_game"]
 [connection signal="text_submitted" from="VBoxContainer/DebugUI/LineEdit2" to="." method="connect_ws"]
 [connection signal="pressed" from="VBoxContainer/DebugUI/Connect WS" to="." method="connect_ws"]
 [connection signal="pressed" from="VBoxContainer/DebugUI/Disconnect WS" to="." method="disconnect_ws"]
