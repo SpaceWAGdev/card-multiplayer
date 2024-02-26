@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cb41wr288jatf"]
 
 [node name="card" type="TextureRect"]
+mouse_default_cursor_shape = 2
 expand_mode = 3
 stretch_mode = 4
 

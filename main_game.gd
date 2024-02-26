@@ -45,19 +45,15 @@ func _process(_delta):
 	poll_ws()
 
 func init_ws():
-	$VBoxContainer/DebugUI/LineEdit2.text = GameState.WS_SERVER_URL
 	socket.connect_to_url(GameState.WS_SERVER_URL)
 
-func connect_ws(url = ""):
-	if url == "":
-		$VBoxContainer/DebugUI/LineEdit2.select_all()
-		url = $VBoxContainer/DebugUI/LineEdit2.get_selected_text()
-		$VBoxContainer/DebugUI/LineEdit2.deselect()
+func connect_ws(url):
 	GameState.WS_SERVER_URL = url
 	get_tree().reload_current_scene()
 	
 func disconnect_ws(code = 1000):
 	socket.close(code, "Manual Disconnect")
+	get_tree().change_scene_to_file("res://menu.tscn")
 
 func poll_ws():
 	socket.poll()
@@ -209,6 +205,8 @@ func _dbg_sync():
 	sync()
 
 func finish_round():
+	if GameState.GAME_STATE != GameState.STATE_LOCALTURN:
+		return
 	ROUND += 1
 	$VBoxContainer/DebugUI/RoundCounter.text = str(ROUND)
 	GameState.GAME_STATE = GameState.STATE_REMOTETURN

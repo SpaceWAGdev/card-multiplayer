@@ -32,6 +32,18 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 30
 
+[node name="REMOTE_PLAYAREA" type="HBoxContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="LOCAL_PLAYAREA" type="HBoxContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
 [node name="DebugUI" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
@@ -62,34 +74,15 @@ flat = true
 [node name="RoundCounter" type="Label" parent="VBoxContainer/DebugUI"]
 layout_mode = 2
 
-[node name="LineEdit2" type="LineEdit" parent="VBoxContainer/DebugUI"]
-layout_mode = 2
-text = "ws://localhost:8080"
-placeholder_text = "ws://localhost:8080"
-expand_to_text_length = true
-virtual_keyboard_type = 7
-
 [node name="Connect WS" type="Button" parent="VBoxContainer/DebugUI"]
 layout_mode = 2
-text = "CONNECT"
+text = "RECONNECT"
 flat = true
 
 [node name="Disconnect WS" type="Button" parent="VBoxContainer/DebugUI"]
 layout_mode = 2
 text = "DISCONNECT"
 flat = true
-
-[node name="REMOTE_PLAYAREA" type="HBoxContainer" parent="VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-alignment = 1
-
-[node name="LOCAL_PLAYAREA" type="HBoxContainer" parent="VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-alignment = 1
 
 [node name="LOCAL_HAND" type="HBoxContainer" parent="VBoxContainer"]
 unique_name_in_owner = true
@@ -101,6 +94,5 @@ alignment = 1
 [connection signal="pressed" from="VBoxContainer/DebugUI/EndTurnButton" to="." method="finish_round"]
 [connection signal="pressed" from="VBoxContainer/DebugUI/StartButton" to="." method="_dbg_begin"]
 [connection signal="pressed" from="VBoxContainer/DebugUI/ClearButton" to="." method="reset_game"]
-[connection signal="text_submitted" from="VBoxContainer/DebugUI/LineEdit2" to="." method="connect_ws"]
 [connection signal="pressed" from="VBoxContainer/DebugUI/Connect WS" to="." method="connect_ws"]
 [connection signal="pressed" from="VBoxContainer/DebugUI/Disconnect WS" to="." method="disconnect_ws"]

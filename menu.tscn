@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://bvy8it6cjbbuq"]
+[gd_scene load_steps=2 format=3 uid="uid://bvy8it6cjbbuq"]
+
+[ext_resource type="Script" path="res://menu.gd" id="1_8x2yh"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -9,17 +11,24 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_8x2yh")
 
-[node name="TextEdit" type="TextEdit" parent="."]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -232.0
-offset_top = -18.0
-offset_right = 232.0
-offset_bottom = 18.0
-grow_horizontal = 2
-grow_vertical = 2
-placeholder_text = "wss://ws.postman-echo.com/raw"
+[node name="URLField" type="LineEdit" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = -130.0
+offset_right = 197.0
+offset_bottom = 31.0
+text = "ws://localhost:8080"
+placeholder_text = "ws://localhost:8080"
+
+[node name="Button" type="Button" parent="URLField"]
+layout_mode = 0
+offset_left = 81.0
+offset_top = 47.0
+offset_right = 240.0
+offset_bottom = 100.0
+text = "CONNECT"
+
+[connection signal="text_submitted" from="URLField" to="." method="connect_to_server"]
+[connection signal="pressed" from="URLField/Button" to="." method="connect_to_server"]
