@@ -15,6 +15,9 @@ func battlecry():
 func deathrattle():
 	print(data["name"], " has no deathrattle")
 	
+func leaderAbility():
+	print(data["name"], " has no active ability")
+
 func on_click(event: InputEvent):
 	if GameState.GAME_STATE != GameState.STATE_LOCALTURN:
 		return
@@ -24,8 +27,9 @@ func on_click(event: InputEvent):
 		if self.get_parent().name in ["REMOTE_PLAYAREA"] and GameState.GAME_MODE == GameState.MODE_SELECT:
 			GameState.SELECT_CALLBACK.call(self)
 			GameState.cancel_card_selection()
-		elif data["class"].contains("Leader"):
-			return
+		elif data["class"].contains("Leader") and int(data["manaCost"]) <= game_manager.MANA:
+			GameState.get_card_selection(leaderAbility)
+			#return
 		elif event.alt_pressed and self.get_parent().name == "LOCAL_HAND":
 			game_manager.move_card(self, "LOCAL_GRAVEYARD") 
 		elif self.get_parent().name == "LOCAL_PLAYAREA" and GameState.GAME_STATE == GameState.STATE_LOCALTURN:

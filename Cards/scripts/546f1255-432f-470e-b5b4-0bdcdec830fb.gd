@@ -1,5 +1,8 @@
 #WINDRICH
 extends CardBase
 
-func attack(card: CardBase):
-	pass
+func handleAbility(card: CardBase):
+	game_manager.move_card(card, "REMOTE_HAND")
+
+func leaderAbility():
+	GameState.get_card_selection()
