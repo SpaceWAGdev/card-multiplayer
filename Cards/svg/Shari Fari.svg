@@ -27,9 +27,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="0.52"
-     inkscape:cx="451.92308"
-     inkscape:cy="575"
+     inkscape:zoom="0.73539105"
+     inkscape:cx="440.58192"
+     inkscape:cy="522.17116"
      inkscape:window-width="1346"
      inkscape:window-height="1040"
      inkscape:window-x="182"
@@ -130,7 +130,8 @@
        height="160.06824"
        x="6.7838092"
        y="115.56944"
-       clip-path="url(#clipPath12)" /><rect
+       clip-path="url(#clipPath12)"
+       transform="matrix(1.0018654,0,0,0.9004607,0.2901321,28.505677)" /><rect
        style="fill:#ff2d2d;fill-opacity:1;stroke:#000000;stroke-width:2.05213;stroke-dasharray:none;stroke-opacity:1"
        id="rect16"
        width="137.37714"
