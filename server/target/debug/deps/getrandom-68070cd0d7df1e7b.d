@@ -1,0 +1,11 @@
+/home/starlight/Documents/dev/card-multiplayer/server/target/debug/deps/libgetrandom-68070cd0d7df1e7b.rmeta: /home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.1.16/src/lib.rs /home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.1.16/src/error.rs /home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.1.16/src/util.rs /home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.1.16/src/error_impls.rs /home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.1.16/src/util_libc.rs /home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.1.16/src/use_file.rs /home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.1.16/src/linux_android.rs
+
+/home/starlight/Documents/dev/card-multiplayer/server/target/debug/deps/getrandom-68070cd0d7df1e7b.d: /home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.1.16/src/lib.rs /home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.1.16/src/error.rs /home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.1.16/src/util.rs /home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.1.16/src/error_impls.rs /home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.1.16/src/util_libc.rs /home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.1.16/src/use_file.rs /home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.1.16/src/linux_android.rs
+
+/home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.1.16/src/lib.rs:
+/home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.1.16/src/error.rs:
+/home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.1.16/src/util.rs:
+/home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.1.16/src/error_impls.rs:
+/home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.1.16/src/util_libc.rs:
+/home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.1.16/src/use_file.rs:
+/home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.1.16/src/linux_android.rs:

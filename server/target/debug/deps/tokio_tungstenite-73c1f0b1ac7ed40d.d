@@ -1,0 +1,10 @@
+/home/starlight/Documents/dev/card-multiplayer/server/target/debug/deps/libtokio_tungstenite-73c1f0b1ac7ed40d.rmeta: /home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-tungstenite-0.20.1/src/lib.rs /home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-tungstenite-0.20.1/src/compat.rs /home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-tungstenite-0.20.1/src/connect.rs /home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-tungstenite-0.20.1/src/handshake.rs /home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-tungstenite-0.20.1/src/stream.rs /home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-tungstenite-0.20.1/src/tls.rs
+
+/home/starlight/Documents/dev/card-multiplayer/server/target/debug/deps/tokio_tungstenite-73c1f0b1ac7ed40d.d: /home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-tungstenite-0.20.1/src/lib.rs /home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-tungstenite-0.20.1/src/compat.rs /home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-tungstenite-0.20.1/src/connect.rs /home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-tungstenite-0.20.1/src/handshake.rs /home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-tungstenite-0.20.1/src/stream.rs /home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-tungstenite-0.20.1/src/tls.rs
+
+/home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-tungstenite-0.20.1/src/lib.rs:
+/home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-tungstenite-0.20.1/src/compat.rs:
+/home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-tungstenite-0.20.1/src/connect.rs:
+/home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-tungstenite-0.20.1/src/handshake.rs:
+/home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-tungstenite-0.20.1/src/stream.rs:
+/home/starlight/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-tungstenite-0.20.1/src/tls.rs:
