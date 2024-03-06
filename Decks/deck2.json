@@ -1,8 +1,9 @@
 {
-	"name" : "Informatik Grundkurs",
+	"name": "Deutsch Leistungskurs",
 	"leader": "546f1255-432f-470e-b5b4-0bdcdec830fb",
 	"cards": [
 		"3964a6c8-325f-46e2-8dda-595cec5c7d4f",
-		"079b8040-9b52-11ee-b9d1-0242ac120002"
+		"079b8040-9b52-11ee-b9d1-0242ac120002",
+		"b8d8875e-2041-4d5f-b5bd-2b8c3cd27605"
 	]
 }

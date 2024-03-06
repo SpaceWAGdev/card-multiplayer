@@ -8,7 +8,8 @@ var MASTER_CARD_RECORD : Dictionary = {
 	"LOCAL_PLAYAREA": [],
 	"REMOTE_PLAYAREA": [],
 	"LOCAL_CHARACTER": [],
-	"LOCAL_GRAVEYARD": []
+	"LOCAL_GRAVEYARD": [],
+	"REMOTE_HAND": []
 }
 
 var MASTER_LOCATION_RECORD: Dictionary = {
@@ -16,7 +17,8 @@ var MASTER_LOCATION_RECORD: Dictionary = {
 	"LOCAL_DECK": null,
 	"LOCAL_PLAYAREA": null,
 	"REMOTE_PLAYAREA": null,
-	"LOCAL_GRAVEYARD": null
+	"LOCAL_GRAVEYARD": null,
+	"REMOTE_HAND": null
 }
 
 var MAX_SIZES: Dictionary = {
@@ -24,7 +26,8 @@ var MAX_SIZES: Dictionary = {
 	"LOCAL_DECK" = 1024,
 	"LOCAL_PLAYAREA" = 5,
 	"REMOTE_PLAYAREA" = 5,
-	"LOCAL_GRAVEYARD" = 1024
+	"LOCAL_GRAVEYARD" = 1024,
+	"REMOTE_HAND" = 9
 }
 
 var ROUND = 0
@@ -40,6 +43,7 @@ func init_card_areas():
 	MASTER_LOCATION_RECORD["LOCAL_PLAYAREA"] = get_node("VBoxContainer/LOCAL_PLAYAREA")
 	MASTER_LOCATION_RECORD["REMOTE_PLAYAREA"] = get_node("VBoxContainer/REMOTE_PLAYAREA")
 	MASTER_LOCATION_RECORD["LOCAL_GRAVEYARD"] = get_node("ColorRect/BoxContainer/LOCAL_GRAVEYARD")
+	MASTER_LOCATION_RECORD["REMOTE_HAND"] = get_node("ColorRect/BoxContainer/REMOTE_HAND")
 
 func _process(_delta):
 	poll_ws()
