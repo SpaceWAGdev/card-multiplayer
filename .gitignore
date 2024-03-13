@@ -2,3 +2,5 @@
 .godot/
 # don't sync the config file
 addons/card_editor/image_editor.txt
+# don't sync the server build target
+server/target/
