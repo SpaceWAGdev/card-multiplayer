@@ -70,9 +70,10 @@ func poll_ws():
 				GameState.begin_turn()
 				ROUND += 1
 				MANA = ROUND
+				$VBoxContainer/DebugUI/ManaDisplay.text = str(MANA) + " MANA" # TODO: Add "update mana display" function
 				$VBoxContainer/DebugUI/RoundCounter.text = str(ROUND)
 			else:
-				deserialize_card(packet)
+				deserialize_cards(packet)
 			return packet			
 	elif state == WebSocketPeer.STATE_CLOSING:
 		# Keep polling to achieve proper close.
@@ -111,7 +112,7 @@ func serialize_card(card: Node):
 		"mid": mid
 	}
 	
-func deserialize_card(bytes: PackedByteArray):
+func deserialize_cards(bytes: PackedByteArray):
 	var obj = bytes_to_var_with_objects(bytes)
 	if obj == null or len(obj) == 0:
 		printerr("Deserialization Error")
@@ -122,6 +123,8 @@ func deserialize_card(bytes: PackedByteArray):
 		create_card_instance(card["data"], false, "REMOTE_PLAYAREA", card["mid"])
 	for card in obj["REMOTE_PLAYAREA"]:
 		create_card_instance(card["data"], false, "LOCAL_PLAYAREA", card["mid"])
+	for card in obj["REMOTE_HAND"]:
+		create_card_instance(card["data"], false, "LOCAL_HAND", card["mid"])
 
 func create_card_instance(data: Dictionary, check_for_duplicates = false, location = "LOCAL_DECK", mid : String = ""):
 	if MASTER_LOCATION_RECORD[location].get_child_count() > MAX_SIZES[location]:
@@ -225,12 +228,15 @@ func sync():
 	print("Attempting to sync")
 	var to_sync = {
 		"LOCAL_PLAYAREA" : [],
-		"REMOTE_PLAYAREA" : []
+		"REMOTE_PLAYAREA" : [],
+		"REMOTE_HAND" : []
 	}
 	for card in MASTER_LOCATION_RECORD["LOCAL_PLAYAREA"].get_children():
 		to_sync["LOCAL_PLAYAREA"].append(serialize_card(card))
 	for card in MASTER_LOCATION_RECORD["REMOTE_PLAYAREA"].get_children():
 		to_sync["REMOTE_PLAYAREA"].append(serialize_card(card))
+	for card in MASTER_LOCATION_RECORD["REMOTE_HAND"].get_children():
+		to_sync["REMOTE_HAND"].append(serialize_card(card))
 	var bytes = var_to_bytes_with_objects(to_sync)
 	wait_for_open_connection_and_send_message(bytes)
 	
