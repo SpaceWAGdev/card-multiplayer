@@ -32,6 +32,7 @@ var MAX_SIZES: Dictionary = {
 
 var ROUND = 0
 var MANA = 0
+var MAX_MANA = 10
 
 func _ready():
 	init_ws()
@@ -178,14 +179,17 @@ func get_card_data(uuid: String):
 
 func load_deck(deck_name: String):
 	var deck = JSON.parse_string(Helpers.load_text_file("res://Decks/" + deck_name + ".json"))
-	create_card_instance(get_card_data(deck["leader"]))
+	create_card_instance(get_card_data(deck["leader"]), false, "LOCAL_HAND")
 	for card in deck["cards"]:
 		print(card)
 		create_card_instance(get_card_data(card))
-	for child in MASTER_LOCATION_RECORD["LOCAL_DECK"].get_children():
-		move_card(child, "LOCAL_HAND")
-	update_screen_area("LOCAL_HAND")
 	sync()
+
+func draw_card():
+	var cards = MASTER_LOCATION_RECORD["LOCAL_DECK"].get_children()
+	if cards.is_empty():
+		return		
+	move_card(cards.pick_random(), "LOCAL_HAND")
 
 func move_card(card: Node, new_location: String):
 	var old_parent = card.get_parent()
@@ -225,6 +229,7 @@ func finish_round():
 func start_round():
 	GameState.begin_turn()
 	overwrite_mana(ROUND)
+	draw_card()
 	
 func sync():
 	print("Attempting to sync")
@@ -263,8 +268,12 @@ func _notification(what):
 
 func update_mana(delta: int):
 	MANA += delta
+	if MANA > MAX_MANA:
+		MANA = MAX_MANA
 	$VBoxContainer/DebugUI/ManaDisplay.text = str(MANA)
 
 func overwrite_mana(value: int):
 	MANA = value
+	if MANA > MAX_MANA:
+		MANA = MAX_MANA
 	$VBoxContainer/DebugUI/ManaDisplay.text = str(MANA)

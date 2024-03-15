@@ -29,7 +29,7 @@ func on_click(event: InputEvent):
 			GameState.cancel_card_selection()
 		elif blocked_until_turn != 0 and blocked_until_turn >= game_manager.ROUND:
 			return
-		elif blocked_until_turn < game_manager.ROUND and blocked_until_turn != 0:
+		elif blocked_until_turn == game_manager.ROUND and blocked_until_turn != 0:
 			blocked_until_turn = 0
 		elif data["class"].contains("Leader") and int(data["manaCost"]) <= game_manager.MANA:
 			leader_ability()
@@ -39,6 +39,7 @@ func on_click(event: InputEvent):
 			GameState.get_card_selection(attack)
 		elif self.get_parent().name == "LOCAL_HAND" and int(data["mana"]) <= game_manager.MANA:
 			play(event)
+		print(game_manager.MANA)
 		print("Click on " + self.data["name"])
 	else:
 		pass
