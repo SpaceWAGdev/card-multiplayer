@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://btioqvwx3e5x1"
+
+[deps]
+
+files=["res://Cards/Balancing Chart.Class                .translation", "res://Cards/Balancing Chart.Damage .translation", "res://Cards/Balancing Chart.Health .translation", "res://Cards/Balancing Chart.Mana .translation", "res://Cards/Balancing Chart.Armor .translation", "res://Cards/Balancing Chart.manaCost .translation", "res://Cards/Balancing Chart.maxAttacks.translation"]
+
+source_file="res://Cards/Balancing Chart.csv"
+dest_files=["res://Cards/Balancing Chart.Class                .translation", "res://Cards/Balancing Chart.Damage .translation", "res://Cards/Balancing Chart.Health .translation", "res://Cards/Balancing Chart.Mana .translation", "res://Cards/Balancing Chart.Armor .translation", "res://Cards/Balancing Chart.manaCost .translation", "res://Cards/Balancing Chart.maxAttacks.translation"]
+
+[params]
+
+compress=true
+delimiter=0
