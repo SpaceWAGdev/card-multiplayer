@@ -1,0 +1,9 @@
+Name       ,Class                ,Damage ,Health ,Mana ,Armor ,manaCost ,maxAttacks
+Lia        ,Barde                ,     2 ,     3 ,   2 ,    0 ,       0 ,         1
+Jakob      ,Barde                ,     2 ,     2 ,   3 ,    0 ,       0 ,         1
+Liam       ,Default              ,     2 ,     7 ,   6 ,    0 ,       2 ,         1
+Noah       ,Default              ,     5 ,     2 ,   4 ,    0 ,       0 ,         2
+Der Wind   ,Leader               ,     0 ,    25 ,   0 ,    2 ,       4 ,         1
+Der Wolf   ,Leader               ,     0 ,    25 ,   0 ,    2 ,       2 ,         3
+Der Sharif ,Leader               ,     0 ,    25 ,   0 ,    2 ,       8 ,         1
+Georg      ,Naturwissenschaftler ,     4 ,     6 ,   5 ,    0 ,       1 ,         1
