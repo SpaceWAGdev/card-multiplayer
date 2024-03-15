@@ -68,9 +68,7 @@ func poll_ws():
 			print("Packet: ", packet.get_string_from_utf8())
 			if packet.get_string_from_utf8().contains("ROUNDOVER"):
 				GameState.begin_turn()
-				ROUND += 1
-				MANA = ROUND
-				$VBoxContainer/DebugUI/ManaDisplay.text = str(MANA) + " MANA" # TODO: Add "update mana display" function
+				start_round()
 				$VBoxContainer/DebugUI/RoundCounter.text = str(ROUND)
 			else:
 				deserialize_cards(packet)
@@ -125,6 +123,8 @@ func deserialize_cards(bytes: PackedByteArray):
 		create_card_instance(card["data"], false, "LOCAL_PLAYAREA", card["mid"])
 	for card in obj["REMOTE_HAND"]:
 		create_card_instance(card["data"], false, "LOCAL_HAND", card["mid"])
+	if not GameState.IS_BEGINNER:
+		ROUND = obj["ROUND"]
 
 func create_card_instance(data: Dictionary, check_for_duplicates = false, location = "LOCAL_DECK", mid : String = ""):
 	if MASTER_LOCATION_RECORD[location].get_child_count() > MAX_SIZES[location]:
@@ -205,8 +205,10 @@ func move_card(card: Node, new_location: String):
 func _dbg_spawn_card():
 	load_deck("deck"+$VBoxContainer/DebugUI/LineEdit.text)
 
-func _dbg_begin():	
+func _dbg_begin():
 	GameState.set_game_state(GameState.STATE_LOCALTURN)
+	GameState.IS_BEGINNER = true
+	start_round()
 
 func _dbg_sync():
 	sync()
@@ -221,15 +223,16 @@ func finish_round():
 	sync()
 
 func start_round():
-	ROUND += 1
-	pass
+	GameState.begin_turn()
+	overwrite_mana(ROUND)
 	
 func sync():
 	print("Attempting to sync")
 	var to_sync = {
 		"LOCAL_PLAYAREA" : [],
 		"REMOTE_PLAYAREA" : [],
-		"REMOTE_HAND" : []
+		"REMOTE_HAND" : [],
+		"ROUND": ROUND
 	}
 	for card in MASTER_LOCATION_RECORD["LOCAL_PLAYAREA"].get_children():
 		to_sync["LOCAL_PLAYAREA"].append(serialize_card(card))
@@ -257,3 +260,11 @@ func clear_area(area: String):
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		disconnect_ws(1001)
+
+func update_mana(delta: int):
+	MANA += delta
+	$VBoxContainer/DebugUI/ManaDisplay.text = str(MANA)
+
+func overwrite_mana(value: int):
+	MANA = value
+	$VBoxContainer/DebugUI/ManaDisplay.text = str(MANA)
