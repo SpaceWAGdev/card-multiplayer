@@ -24,7 +24,7 @@ func on_click(event: InputEvent):
 	if self.get_parent().name in ["LOCAL_GRAVEYARD"]:
 		return
 	elif event.is_pressed():
-		if self.get_parent().name in ["REMOTE_PLAYAREA"] and GameState.GAME_MODE == GameState.MODE_SELECT:
+		if self.get_parent().name in GameState.SELECT_MASK and GameState.GAME_MODE == GameState.MODE_SELECT:
 			GameState.SELECT_CALLBACK.call(self)
 			GameState.cancel_card_selection()
 		elif blocked_until_turn != 0 and blocked_until_turn >= game_manager.ROUND:
