@@ -2,12 +2,17 @@ class_name CardBase
 extends TextureRect
 @export var	data: Dictionary
 var game_manager: Node
+var attacks = 0
+var blocked_until_turn = 0
+var friendly = true
 
 func setup(_data: Dictionary, _game_manager):
 	data = _data
 	game_manager = _game_manager
 	var health = get_child(0) as Label
 	health.text = str(data["health"])
+	if "max_attacks" not in data.keys():
+		data["max_attacks"] = 1
 
 func battlecry():
 	print(data["name"], " has no battlecry")
@@ -45,12 +50,15 @@ func on_click(event: InputEvent):
 		pass
 
 func attack(card: CardBase):
+	if attacks >= data["max_attacks"]:
+		return
 	print('Attacking ' + card.data["name"] + ' from ' +  data["name"])
 	card.data["health"] = int(card.data["health"]) - int(data["damage"])
 	card.update_stats()
 	if card.data["health"] <= 0:
 		self.deathrattle()
 		game_manager.move_card(card, "LOCAL_GRAVEYARD")
+	attacks += 1
 	
 func play(_event: InputEvent):
 	game_manager.MANA = game_manager.MANA - int(data["mana"])
@@ -60,4 +68,5 @@ func update_stats():
 	var health_label : Label = get_children()[0]
 	health_label.text = str(data["health"])
 
-var blocked_until_turn = 0
+func on_round_start():
+	attacks = 0

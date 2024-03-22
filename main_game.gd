@@ -204,6 +204,8 @@ func move_card(card: Node, new_location: String):
 		card.battlecry()
 	if new_location == "LOCAL_GRAVEYARD":
 		card.z_index = -10 
+	if new_location.begins_with("LOCAL"):
+		card.friendly = true
 	print(new_location_node.name, new_location_node.get_children())
 
 func _dbg_spawn_card():
@@ -230,6 +232,8 @@ func start_round():
 	GameState.begin_turn()
 	overwrite_mana(ROUND)
 	draw_card()
+	for card in MASTER_LOCATION_RECORD["LOCAL_PLAYAREA"].get_children():
+		card.on_round_start()
 	
 func sync():
 	print("Attempting to sync")
