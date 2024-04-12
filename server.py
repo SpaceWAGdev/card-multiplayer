@@ -6,7 +6,6 @@ from hashlib import md5
 # Dictionary to store connected clients with their respective WebSocket objects
 connected_clients = {}
 
-
 async def server(websocket, path):
     print(f"Client connected: {websocket.remote_address}")
     # Add the new client to the dictionary of connected clients

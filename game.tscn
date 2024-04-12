@@ -91,6 +91,11 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "# Mana"
 
+[node name="MatchIDDisplay" type="Label" parent="VBoxContainer/DebugUI"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Match ID"
+
 [node name="LOCAL_HAND" type="HBoxContainer" parent="VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2

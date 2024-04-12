@@ -11,7 +11,7 @@ fn main() {
         move |msg| {
             // Handle messages received on this connection
             println!("Server got message '{}'. ", msg);
-
+            
             // Use the out channel to send messages back
             out.send(msg)
         }

@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cb41wr288jatf"]
+
+[node name="card" type="TextureRect"]
+mouse_default_cursor_shape = 2
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "10"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "ABILITY"
