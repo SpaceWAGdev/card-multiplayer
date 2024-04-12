@@ -1,12 +1,28 @@
-[gd_scene format=3 uid="uid://cb41wr288jatf"]
+[gd_scene format=3 uid="uid://3ltu4okdvm7a"]
 
-[node name="card" type="TextureRect"]
-mouse_default_cursor_shape = 2
-expand_mode = 3
-stretch_mode = 4
-
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
+[node name="VBoxContainer" type="VBoxContainer"]
 offset_right = 40.0
-offset_bottom = 23.0
+offset_bottom = 40.0
+
+[node name="Top Row" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Health" type="Label" parent="Top Row"]
+layout_mode = 2
+text = "10
+"
+
+[node name="Mana" type="Label" parent="Top Row"]
+layout_mode = 2
 text = "10"
+
+[node name="Image" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(200, 300)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+text = "ABILITY"

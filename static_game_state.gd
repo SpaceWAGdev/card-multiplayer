@@ -16,6 +16,8 @@ enum {
 }
 
 var WS_SERVER_URL = "ws://localhost:8080"
+var MATCH_ID = null
+
 
 var IS_BEGINNER = false
 

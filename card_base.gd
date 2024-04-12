@@ -1,5 +1,5 @@
 class_name CardBase
-extends TextureRect
+extends Control
 @export var	data: Dictionary
 var game_manager: Node
 var attacks = 0
@@ -9,7 +9,7 @@ var friendly = true
 func setup(_data: Dictionary, _game_manager):
 	data = _data
 	game_manager = _game_manager
-	var health = get_child(0) as Label
+	var health = get_child(0).get_child(0) as Label
 	health.text = str(data["health"])
 	if "max_attacks" not in data.keys():
 		data["max_attacks"] = 1
@@ -65,7 +65,7 @@ func play(_event: InputEvent):
 	get_tree().root.get_node("PanelContainer").move_card(self, "LOCAL_PLAYAREA")
 
 func update_stats():
-	var health_label : Label = get_children()[0]
+	var health_label : Label = get_child(0).get_child(0)
 	health_label.text = str(data["health"])
 
 func on_round_start():

@@ -71,6 +71,8 @@ func poll_ws():
 				GameState.begin_turn()
 				start_round()
 				$VBoxContainer/DebugUI/RoundCounter.text = str(ROUND)
+			if packet.get_string_from_utf8().contains("MATCH:"):
+				GameState.MATCH_ID = packet.get_string_from_utf8().split(":")[1]
 			else:
 				deserialize_cards(packet)
 			return packet			
@@ -140,9 +142,9 @@ func create_card_instance(data: Dictionary, check_for_duplicates = false, locati
 		card_image.set_meta("mid", Helpers.generate_uuid())
 	if img == null:
 		img = load("res://Cards/images/Image-1.jpg")
-	card_image.texture = img
+	card_image.get_child(1).texture = img
 	card_image.script = script
-	
+
 	if card_image in MASTER_CARD_RECORD[location] and check_for_duplicates:
 		return
 	
@@ -152,6 +154,9 @@ func create_card_instance(data: Dictionary, check_for_duplicates = false, locati
 		
 	var click_event = card_image.gui_input
 	click_event.connect(card_image.on_click)
+
+	if location == "LOCAL_DECK":
+		card_image.z_index = -10
 	
 	if location == "LOCAL_PLAYAREA" and mid == "":
 		card_image.battlecry()
@@ -202,8 +207,10 @@ func move_card(card: Node, new_location: String):
 	update_screen_area(new_location_node.name)
 	if new_location == "LOCAL_PLAYAREA" and old_parent.name == "LOCAL_HAND":
 		card.battlecry()
-	if new_location == "LOCAL_GRAVEYARD":
-		card.z_index = -10 
+	if new_location in ["LOCAL_GRAVEYARD", "LOCAL_DECK"]:
+		card.z_index = -10
+	else:
+		card.z_index = 0
 	if new_location.begins_with("LOCAL"):
 		card.friendly = true
 	print(new_location_node.name, new_location_node.get_children())
@@ -250,7 +257,7 @@ func sync():
 	for card in MASTER_LOCATION_RECORD["REMOTE_HAND"].get_children():
 		to_sync["REMOTE_HAND"].append(serialize_card(card))
 	var bytes = var_to_bytes_with_objects(to_sync)
-	wait_for_open_connection_and_send_message(bytes)
+	wait_for_open_connection_and_send_message(bytes)             
 	
 func replace_areas(data: PackedByteArray): 
 	print(bytes_to_var_with_objects(data))
