@@ -20,7 +20,10 @@ func battlecry():
 func deathrattle():
 	print(data["name"], " has no deathrattle")
 	
-func leader_ability():
+func dispatch_ability():
+	ability()
+
+func ability():
 	print(data["name"], " has no active ability")
 
 func on_click(event: InputEvent):
@@ -37,7 +40,7 @@ func on_click(event: InputEvent):
 		elif blocked_until_turn == game_manager.ROUND and blocked_until_turn != 0:
 			blocked_until_turn = 0
 		elif data["class"].contains("Leader") and int(data["manaCost"]) <= game_manager.MANA:
-			leader_ability()
+			dispatch_ability()
 		elif event.alt_pressed and self.get_parent().name == "LOCAL_HAND":
 			game_manager.move_card(self, "LOCAL_GRAVEYARD") 
 		elif self.get_parent().name == "LOCAL_PLAYAREA" and GameState.GAME_STATE == GameState.STATE_LOCALTURN:

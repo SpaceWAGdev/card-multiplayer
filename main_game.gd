@@ -151,6 +151,9 @@ func create_card_instance(data: Dictionary, check_for_duplicates = false, locati
 	MASTER_LOCATION_RECORD[location].add_child(card_image)
 	update_screen_area(location)
 	card_image.setup(data, self)
+
+	var ability_button : Button = card_image.get_child(2)
+	ability_button.pressed.connect(card_image.dispatch_ability)
 		
 	var click_event = card_image.gui_input
 	click_event.connect(card_image.on_click)
