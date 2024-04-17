@@ -6,11 +6,16 @@ offset_bottom = 40.0
 
 [node name="Top Row" type="HBoxContainer" parent="."]
 layout_mode = 2
+alignment = 1
 
 [node name="Health" type="Label" parent="Top Row"]
 layout_mode = 2
 text = "10
 "
+
+[node name="VSeparator" type="VSeparator" parent="Top Row"]
+layout_mode = 2
+theme_override_constants/separation = 7
 
 [node name="Mana" type="Label" parent="Top Row"]
 layout_mode = 2

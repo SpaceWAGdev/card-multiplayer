@@ -13,6 +13,8 @@ func setup(_data: Dictionary, _game_manager):
 	health.text = str(data["health"])
 	if "max_attacks" not in data.keys():
 		data["max_attacks"] = 1
+	var atk = get_child(0).get_child(2) as Label
+	atk.text = str(data["damage"])
 
 func battlecry():
 	print(data["name"], " has no battlecry")
