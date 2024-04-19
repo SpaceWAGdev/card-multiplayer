@@ -23,7 +23,8 @@ func deathrattle():
 	print(data["name"], " has no deathrattle")
 	
 func dispatch_ability():
-	ability()
+	if not int(data["manaCost"]) > game_manager.MANA:
+		ability()
 
 func ability():
 	print(data["name"], " has no active ability")

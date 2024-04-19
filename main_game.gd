@@ -37,6 +37,9 @@ var MAX_MANA = 10
 func _ready():
 	init_ws()
 	init_card_areas()
+	GameState.on_enter_selectmode.connect(_dbg_display_select_mode)
+	GameState.on_exit_selectmode.connect(_dbg_clear_select_mode)
+
 
 func init_card_areas():
 	MASTER_LOCATION_RECORD["LOCAL_HAND"] = get_node("VBoxContainer/LOCAL_HAND")
@@ -291,3 +294,9 @@ func overwrite_mana(value: int):
 	if MANA > MAX_MANA:
 		MANA = MAX_MANA
 	$VBoxContainer/DebugUI/ManaDisplay.text = str(MANA)
+
+func _dbg_display_select_mode():
+	$VBoxContainer/DebugUI.set("theme_override_colors/background_color", Color.GREEN_YELLOW)
+
+func _dbg_clear_select_mode():
+	$VBoxContainer/DebugUI.set("theme_override_colors/background_color", Color.TRANSPARENT)

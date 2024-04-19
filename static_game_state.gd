@@ -1,5 +1,7 @@
 extends Node
 
+signal on_enter_selectmode()
+signal on_exit_selectmode()
 enum {
 	STATE_STARTING,
 	STATE_LOCALTURN,
@@ -46,10 +48,12 @@ func get_card_selection(callback: Callable, mask = SELECT_MASK_ENEMIES):
 	GAME_MODE = MODE_SELECT
 	print("SELECT MODE STARTED")
 	SELECT_CALLBACK = callback
+	on_enter_selectmode.emit()
 	Input.set_default_cursor_shape(Input.CURSOR_CROSS)
 	
 func cancel_card_selection():
 	SELECT_MASK = []
 	print("SELECT MODE CANCELLED")
 	GAME_MODE = MODE_PLAY
+	on_exit_selectmode.emit()
 	Input.set_default_cursor_shape(Input.CURSOR_ARROW)
