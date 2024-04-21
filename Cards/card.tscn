@@ -8,6 +8,12 @@ offset_bottom = 40.0
 layout_mode = 2
 alignment = 1
 
+[node name="Mana" type="Label" parent="Top Row"]
+visible = false
+layout_mode = 2
+text = "10
+"
+
 [node name="Health" type="Label" parent="Top Row"]
 layout_mode = 2
 text = "10
@@ -17,7 +23,7 @@ text = "10
 layout_mode = 2
 theme_override_constants/separation = 7
 
-[node name="Mana" type="Label" parent="Top Row"]
+[node name="Damage" type="Label" parent="Top Row"]
 layout_mode = 2
 text = "10"
 

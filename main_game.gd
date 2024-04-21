@@ -166,6 +166,13 @@ func create_card_instance(data: Dictionary, check_for_duplicates = false, locati
 	
 	if location == "LOCAL_PLAYAREA" and mid == "":
 		card_image.battlecry()
+
+	for child in card_image.find_child("Top Row").get_children():
+		child.visible = false
+	var mana_label = card_image.find_child("Mana", true)
+	mana_label.visible = true
+	mana_label.text = data["mana"]
+
 	card_image.update_stats()
 	print("Instantiated ", data["name"], " (Card Object) in ", location )
 	
@@ -213,6 +220,8 @@ func move_card(card: Node, new_location: String):
 	update_screen_area(new_location_node.name)
 	if new_location == "LOCAL_PLAYAREA" and old_parent.name == "LOCAL_HAND":
 		card.battlecry()
+		for child in card.find_child("Top Row").get_children():
+			child.visible = !child.visible
 	if new_location in ["LOCAL_GRAVEYARD", "LOCAL_DECK"]:
 		card.z_index = -10
 	else:

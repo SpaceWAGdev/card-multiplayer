@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://cvdtw2ohsjsbg"]
+
+[node name="CardImageOverlay" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]

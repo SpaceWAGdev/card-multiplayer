@@ -1,20 +1,42 @@
 class_name CardBase
 extends Control
 @export var	data: Dictionary
+@export var delta_y_position: int = 45
 var game_manager: Node
 var attacks = 0
 var blocked_until_turn = 0
 var friendly = true
 
+func _hover_enter() -> void:
+	if get_parent().name.contains("DECK") or get_parent().name.contains("GRAVEYARD"):
+		return 
+	var position = self.get_global_transform_with_canvas().get_origin()
+	var image = preload("res://card_image_overlay.tscn").instantiate()
+	image.get_child(0).texture = find_child("Image").texture
+	image.scale = Vector2(0.5, 0.5)
+	image.name = "hover_img"
+	image.z_index = 20
+	var width = image.get_child(0).texture.get_width()
+	image.position = Vector2((image.position.x + width / 4 * image.scale.x ), image.position.y + delta_y_position)
+	self.add_child(image)
+
+
+func _hover_exit() -> void:
+	var image = self.get_child(3)
+	if image != null:
+		image.queue_free()
+
 func setup(_data: Dictionary, _game_manager):
 	data = _data
 	game_manager = _game_manager
-	var health = get_child(0).get_child(0) as Label
+	var health = find_child("Health", true) as Label
 	health.text = str(data["health"])
 	if "max_attacks" not in data.keys():
 		data["max_attacks"] = 1
-	var atk = get_child(0).get_child(2) as Label
+	var atk = find_child("Damage", true) as Label
 	atk.text = str(data["damage"])
+	self.mouse_entered.connect(_hover_enter)
+	self.mouse_exited.connect(_hover_exit)
 
 func battlecry():
 	print(data["name"], " has no battlecry")
@@ -71,7 +93,7 @@ func play(_event: InputEvent):
 	get_tree().root.get_node("PanelContainer").move_card(self, "LOCAL_PLAYAREA")
 
 func update_stats():
-	var health_label : Label = get_child(0).get_child(0)
+	var health_label : Label = find_child("Health", true)
 	health_label.text = str(data["health"])
 
 func on_round_start():
