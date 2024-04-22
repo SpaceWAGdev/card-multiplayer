@@ -51,6 +51,15 @@ func dispatch_ability():
 func ability():
 	print(data["name"], " has no active ability")
 
+func take_damage(amount: int):
+	var current_armor = int(data["armor"])
+	data["armor"] = int(data["armor"]) - amount
+	data["health"] = int(data["health"]) - max(0, (amount - current_armor))
+	update_stats()
+	if data["health"] <= 0:
+		self.deathrattle()
+		game_manager.move_card(self, "LOCAL_GRAVEYARD")
+
 func on_click(event: InputEvent):
 	if GameState.GAME_STATE != GameState.STATE_LOCALTURN:
 		return
@@ -81,11 +90,6 @@ func attack(card: CardBase):
 	if attacks >= data["max_attacks"]:
 		return
 	print('Attacking ' + card.data["name"] + ' from ' +  data["name"])
-	card.data["health"] = int(card.data["health"]) - int(data["damage"])
-	card.update_stats()
-	if card.data["health"] <= 0:
-		self.deathrattle()
-		game_manager.move_card(card, "LOCAL_GRAVEYARD")
 	attacks += 1
 	
 func play(_event: InputEvent):
