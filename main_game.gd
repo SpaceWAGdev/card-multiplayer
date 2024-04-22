@@ -224,8 +224,10 @@ func move_card(card: Node, new_location: String):
 			child.visible = !child.visible
 	if new_location in ["LOCAL_GRAVEYARD", "LOCAL_DECK"]:
 		card.z_index = -10
+		card.set_process(false)
 	else:
 		card.z_index = 0
+		card.set_process(true)
 	if new_location.begins_with("LOCAL"):
 		card.friendly = true
 	print(new_location_node.name, new_location_node.get_children())

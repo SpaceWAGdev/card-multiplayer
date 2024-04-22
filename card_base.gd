@@ -10,7 +10,6 @@ var friendly = true
 func _hover_enter() -> void:
 	if get_parent().name.contains("DECK") or get_parent().name.contains("GRAVEYARD"):
 		return 
-	var position = self.get_global_transform_with_canvas().get_origin()
 	var image = preload("res://card_image_overlay.tscn").instantiate()
 	image.get_child(0).texture = find_child("Image").texture
 	image.scale = Vector2(0.5, 0.5)
@@ -19,7 +18,6 @@ func _hover_enter() -> void:
 	var width = image.get_child(0).texture.get_width()
 	image.position = Vector2((image.position.x + width / 4 * image.scale.x ), image.position.y + delta_y_position)
 	self.add_child(image)
-
 
 func _hover_exit() -> void:
 	var image = self.get_child(3)
@@ -95,6 +93,9 @@ func play(_event: InputEvent):
 func update_stats():
 	var health_label : Label = find_child("Health", true)
 	health_label.text = str(data["health"])
+
+	var atk_label : Label = find_child("Damage", true)
+	health_label.text = str(data["damage"])
 
 func on_round_start():
 	attacks = 0
