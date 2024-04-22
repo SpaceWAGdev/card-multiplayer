@@ -35,6 +35,8 @@ func setup(_data: Dictionary, _game_manager):
 	atk.text = str(data["damage"])
 	self.mouse_entered.connect(_hover_enter)
 	self.mouse_exited.connect(_hover_exit)
+	if "Leader" in data["class"]:
+		find_child("Mana", true).visible = false
 
 func battlecry():
 	print(data["name"], " has no battlecry")
@@ -96,6 +98,9 @@ func update_stats():
 
 	var atk_label : Label = find_child("Damage", true)
 	health_label.text = str(data["damage"])
+
+	if "Leader" in data["class"]:
+		find_child("Mana", true).visible = false
 
 func on_round_start():
 	attacks = 0

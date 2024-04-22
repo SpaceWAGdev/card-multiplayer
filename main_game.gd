@@ -298,13 +298,13 @@ func update_mana(delta: int):
 	MANA += delta
 	if MANA > MAX_MANA:
 		MANA = MAX_MANA
-	$VBoxContainer/DebugUI/ManaDisplay.text = str(MANA)
+	$VBoxContainer/DebugUI/ManaDisplay.update_mana(MANA)
 
 func overwrite_mana(value: int):
 	MANA = value
 	if MANA > MAX_MANA:
 		MANA = MAX_MANA
-	$VBoxContainer/DebugUI/ManaDisplay.text = str(MANA)
+	$VBoxContainer/DebugUI/ManaDisplay.update_mana(MANA)
 
 func _dbg_display_select_mode():
 	$VBoxContainer/DebugUI.set("theme_override_colors/background_color", Color.GREEN_YELLOW)

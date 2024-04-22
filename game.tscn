@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://c0u327em4e4cg"]
+[gd_scene load_steps=4 format=3 uid="uid://c0u327em4e4cg"]
 
 [ext_resource type="Script" path="res://main_game.gd" id="1_646wj"]
+[ext_resource type="PackedScene" uid="uid://dn181ul2jp2vs" path="res://mana_circle.tscn" id="2_3moha"]
+[ext_resource type="Script" path="res://mana_display.gd" id="2_iado0"]
 
 [node name="PanelContainer" type="PanelContainer"]
 anchors_preset = 15
@@ -86,10 +88,28 @@ layout_mode = 2
 text = "DISCONNECT"
 flat = true
 
-[node name="ManaDisplay" type="Label" parent="VBoxContainer/DebugUI"]
-unique_name_in_owner = true
+[node name="ManaDisplay" type="HBoxContainer" parent="VBoxContainer/DebugUI"]
 layout_mode = 2
-text = "# Mana"
+size_flags_vertical = 4
+script = ExtResource("2_iado0")
+
+[node name="TextureRect7" parent="VBoxContainer/DebugUI/ManaDisplay" instance=ExtResource("2_3moha")]
+layout_mode = 2
+
+[node name="TextureRect8" parent="VBoxContainer/DebugUI/ManaDisplay" instance=ExtResource("2_3moha")]
+layout_mode = 2
+
+[node name="TextureRect9" parent="VBoxContainer/DebugUI/ManaDisplay" instance=ExtResource("2_3moha")]
+layout_mode = 2
+
+[node name="TextureRect10" parent="VBoxContainer/DebugUI/ManaDisplay" instance=ExtResource("2_3moha")]
+layout_mode = 2
+
+[node name="TextureRect11" parent="VBoxContainer/DebugUI/ManaDisplay" instance=ExtResource("2_3moha")]
+layout_mode = 2
+
+[node name="TextureRect12" parent="VBoxContainer/DebugUI/ManaDisplay" instance=ExtResource("2_3moha")]
+layout_mode = 2
 
 [node name="MatchIDDisplay" type="Label" parent="VBoxContainer/DebugUI"]
 unique_name_in_owner = true

@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://dn181ul2jp2vs"]
+
+[ext_resource type="Texture2D" uid="uid://bbd3hlrt3j67v" path="res://mana_circle.png" id="1_2cwfm"]
+
+[node name="TextureRect7" type="TextureRect"]
+custom_minimum_size = Vector2(20, 20)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_2cwfm")
+expand_mode = 1
+stretch_mode = 4
