@@ -16,7 +16,11 @@ func _hover_enter() -> void:
 	image.name = "hover_img"
 	image.z_index = 20
 	var width = image.get_child(0).texture.get_width()
-	image.position = Vector2((image.position.x + width / 4 * image.scale.x ), image.position.y + delta_y_position)
+	var height = image.get_child(0).texture.get_height()
+
+	# image gets centered over the original card0
+	image.position = Vector2((image.position.x + width / 4 * image.scale.x ), (image.position.y + height / 6 * image.scale.y) - delta_y_position)
+
 	self.add_child(image)
 
 func _hover_exit() -> void:
