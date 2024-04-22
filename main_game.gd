@@ -167,6 +167,9 @@ func create_card_instance(data: Dictionary, check_for_duplicates = false, locati
 	if location == "LOCAL_PLAYAREA" and mid == "":
 		card_image.battlecry()
 
+	if location.contains("REMOTE"):
+		card_image.find_child("Ability", true).visible = false
+
 	for child in card_image.find_child("Top Row").get_children():
 		child.visible = false
 	var mana_label = card_image.find_child("Mana", true)
@@ -225,6 +228,13 @@ func move_card(card: Node, new_location: String):
 	if new_location in ["LOCAL_GRAVEYARD", "LOCAL_DECK"]:
 		card.z_index = -10
 		card.set_process(false)
+		card.visible = false
+	else:
+		card.visible = true
+		card.set_process(true)
+
+	if new_location.contains("REMOTE"):
+		card.find_child("Ability", true).visible = false
 	else:
 		card.z_index = 0
 		card.set_process(true)

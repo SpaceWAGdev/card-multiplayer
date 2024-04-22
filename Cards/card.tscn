@@ -33,7 +33,7 @@ layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Button" type="Button" parent="."]
+[node name="Ability" type="Button" parent="."]
 layout_mode = 2
 size_flags_vertical = 3
 text = "ABILITY"
