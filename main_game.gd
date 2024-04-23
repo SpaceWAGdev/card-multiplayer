@@ -132,6 +132,29 @@ func deserialize_cards(bytes: PackedByteArray):
 	if not GameState.IS_BEGINNER:
 		ROUND = obj["ROUND"]
 
+func decorate_card(card_image, location, data):
+	for child in card_image.find_child("Top Row").get_children():
+		child.visible = false
+
+	var mana_label = card_image.find_child("Mana", true)
+
+	if location.contains("REMOTE"):
+		card_image.find_child("Ability", true).visible = false
+		mana_label.visible = false
+	elif location == "LOCAL_HAND":
+		mana_label.visible = true
+	elif location == "LOCAL_PLAYAREA":
+		var to_enable = [
+		card_image.find_child("Health", true),
+		card_image.find_child("Damage", true),
+		card_image.find_child("VSeparator", true)
+		]
+
+		for e in to_enable:
+			e.visible = true
+		
+	mana_label.text = data["mana"]
+
 func create_card_instance(data: Dictionary, check_for_duplicates = false, location = "LOCAL_DECK", mid : String = ""):
 	if MASTER_LOCATION_RECORD[location].get_child_count() > MAX_SIZES[location]:
 		print(location, " full! Exiting")
@@ -145,7 +168,7 @@ func create_card_instance(data: Dictionary, check_for_duplicates = false, locati
 		card_image.set_meta("mid", Helpers.generate_uuid())
 	if img == null:
 		img = load("res://Cards/images/Image-1.jpg")
-	card_image.get_child(1).texture = img
+	card_image.find_child("Image").texture = img
 	card_image.script = script
 
 	if card_image in MASTER_CARD_RECORD[location] and check_for_duplicates:
@@ -155,7 +178,7 @@ func create_card_instance(data: Dictionary, check_for_duplicates = false, locati
 	update_screen_area(location)
 	card_image.setup(data, self)
 
-	var ability_button : Button = card_image.get_child(2)
+	var ability_button : Button = card_image.find_child("Ability", true)
 	ability_button.pressed.connect(card_image.dispatch_ability)
 		
 	var click_event = card_image.gui_input
@@ -167,14 +190,7 @@ func create_card_instance(data: Dictionary, check_for_duplicates = false, locati
 	if location == "LOCAL_PLAYAREA" and mid == "":
 		card_image.battlecry()
 
-	if location.contains("REMOTE"):
-		card_image.find_child("Ability", true).visible = false
-
-	for child in card_image.find_child("Top Row").get_children():
-		child.visible = false
-	var mana_label = card_image.find_child("Mana", true)
-	mana_label.visible = true
-	mana_label.text = data["mana"]
+	decorate_card(card_image, location, data)
 
 	card_image.update_stats()
 	print("Instantiated ", data["name"], " (Card Object) in ", location )
@@ -223,8 +239,6 @@ func move_card(card: Node, new_location: String):
 	update_screen_area(new_location_node.name)
 	if new_location == "LOCAL_PLAYAREA" and old_parent.name == "LOCAL_HAND":
 		card.battlecry()
-		for child in card.find_child("Top Row").get_children():
-			child.visible = !child.visible
 	if new_location in ["LOCAL_GRAVEYARD", "LOCAL_DECK"]:
 		card.z_index = -10
 		card.set_process(false)
@@ -233,13 +247,15 @@ func move_card(card: Node, new_location: String):
 		card.visible = true
 		card.set_process(true)
 
-	if new_location.contains("REMOTE"):
-		card.find_child("Ability", true).visible = false
-	else:
+	if not new_location.contains("REMOTE"):
 		card.z_index = 0
 		card.set_process(true)
+
 	if new_location.begins_with("LOCAL"):
 		card.friendly = true
+
+	decorate_card(card, new_location, card.data)
+	
 	print(new_location_node.name, new_location_node.get_children())
 
 func _dbg_spawn_card():
