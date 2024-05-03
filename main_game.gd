@@ -40,15 +40,17 @@ func _ready():
 	GameState.on_enter_selectmode.connect(_dbg_display_select_mode)
 	GameState.on_exit_selectmode.connect(_dbg_clear_select_mode)
 	load_deck(GameState.DECK_PATH)
+	wait_for_open_connection_and_send_message(GameState.SETUP_MESSAGE)
 
 
 func init_card_areas():
+	# TODO: Switch to @exports
 	MASTER_LOCATION_RECORD["LOCAL_HAND"] = get_node("VBoxContainer/LOCAL_HAND")
-	MASTER_LOCATION_RECORD["LOCAL_DECK"] = get_node("ColorRect/BoxContainer/LOCAL_DECK")
+	MASTER_LOCATION_RECORD["LOCAL_DECK"] = get_node("ColorRect/LOCAL_DECK")
 	MASTER_LOCATION_RECORD["LOCAL_PLAYAREA"] = get_node("VBoxContainer/LOCAL_PLAYAREA")
 	MASTER_LOCATION_RECORD["REMOTE_PLAYAREA"] = get_node("VBoxContainer/REMOTE_PLAYAREA")
-	MASTER_LOCATION_RECORD["LOCAL_GRAVEYARD"] = get_node("ColorRect/BoxContainer/LOCAL_GRAVEYARD")
-	MASTER_LOCATION_RECORD["REMOTE_HAND"] = get_node("ColorRect/BoxContainer/REMOTE_HAND")
+	MASTER_LOCATION_RECORD["LOCAL_GRAVEYARD"] = get_node("ColorRect/LOCAL_GRAVEYARD")
+	MASTER_LOCATION_RECORD["REMOTE_HAND"] = get_node("ColorRect/REMOTE_HAND")
 
 func _process(_delta):
 	poll_ws()
@@ -81,7 +83,7 @@ func poll_ws():
 				GameState.MATCH_ID = packet.get_string_from_utf8().split(":")[1]
 			else:
 				deserialize_cards(packet)
-			return packet			
+			return packet
 	elif state == WebSocketPeer.STATE_CLOSING:
 		# Keep polling to achieve proper close.
 		$"VBoxContainer/DebugUI/Connect WS".set("theme_override_colors/font_color", Color.RED)
@@ -183,12 +185,13 @@ func create_card_instance(data: Dictionary, check_for_duplicates = false, locati
 
 	var ability_button : Button = card_image.find_child("Ability", true)
 	ability_button.pressed.connect(card_image.dispatch_ability)
-		
+	
 	var click_event = card_image.gui_input
 	click_event.connect(card_image.on_click)
 
 	if location == "LOCAL_DECK":
 		card_image.z_index = -10
+		card_image.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	
 	if location == "LOCAL_PLAYAREA" and mid == "":
 		card_image.battlecry()
@@ -275,7 +278,7 @@ func finish_round():
 	ROUND += 1
 	$VBoxContainer/DebugUI/RoundCounter.text = str(ROUND)
 	GameState.GAME_STATE = GameState.STATE_REMOTETURN
-	wait_for_open_connection_and_send_message("ROUNDOVER\n".to_utf8_buffer())
+	wait_for_open_connection_and_send_message("ROUNDOVER\n")
 	sync()
 
 func start_round():

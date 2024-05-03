@@ -21,7 +21,7 @@ func on_deck_selection_changed(i: int) -> void:
 	GameState.DECK_PATH = decks[i]
 
 func on_debug_state_changed(value: bool) -> void:
-	pass
+	GameState.DEBUG_MODE = value
 
 func start_game() -> void:
-	pass # Replace with function body.
+	get_tree().change_scene_to_file("res://game.tscn")
