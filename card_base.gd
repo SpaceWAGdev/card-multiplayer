@@ -11,6 +11,7 @@ func _hover_enter() -> void:
 	if get_parent().name.contains("DECK") or get_parent().name.contains("GRAVEYARD"):
 		return 
 	var image = preload("res://card_image_overlay.tscn").instantiate()
+	# TODO: Don't instantiate, just toggle visiblity
 	image.get_child(0).texture = find_child("Image").texture
 	image.scale = Vector2(0.5, 0.5)
 	image.name = "hover_img"
@@ -24,7 +25,8 @@ func _hover_enter() -> void:
 	self.add_child(image)
 
 func _hover_exit() -> void:
-	var image = self.get_child(3)
+	var image = get_child(3)
+	print(image)
 	if image != null:
 		image.queue_free()
 
@@ -67,7 +69,7 @@ func take_damage(amount: int):
 func on_click(event: InputEvent):
 	if GameState.GAME_STATE != GameState.STATE_LOCALTURN:
 		return
-	if self.get_parent().name in ["LOCAL_GRAVEYARD"]:
+	if self.get_parent().name in ["LOCAL_GRAVEYARD", "LOCAL_DECK"]:
 		return
 	elif event.is_pressed():
 		if self.get_parent().name in GameState.SELECT_MASK and GameState.GAME_MODE == GameState.MODE_SELECT:

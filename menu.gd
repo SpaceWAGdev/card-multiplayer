@@ -24,6 +24,7 @@ func join_match_with_key():
 		"user": GameState.PLAYER_ID,
 		"match": GameState.MATCH_ID
 	})
+	switch_scene()
 
 func create_match_with_key():
 	connect_to_server("")
@@ -32,4 +33,4 @@ func request_matchmaking():
 	connect_to_server("")
 
 func switch_scene():
-	get_tree().change_scene_to_file("res://game.tscn")
+	get_tree().change_scene_to_file("res://match_select.tscn")

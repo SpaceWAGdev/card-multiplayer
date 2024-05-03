@@ -15,7 +15,6 @@ async def server(websocket: websockets.WebSocketServerProtocol, path: str):
         async for message in websocket:
             print(f"Received message from {websocket.remote_address}: {message}")
             print(json.loads(message))
-            
 
             # Echo the message back to every other connected client
             # for client_address, client in connected_clients.items():
