@@ -18,13 +18,21 @@ enum {
 }
 
 var WS_SERVER_URL = "ws://localhost:8080"
+
+var SETUP_MESSAGE = ""
+
 var MATCH_ID = null
 
+var DECK_PATH = "deck1.json"
+
+var DEBUG_MODE = false
 
 var IS_BEGINNER = false
 
 var GAME_STATE = STATE_STARTING
 var GAME_MODE = MODE_DISABLED
+
+var PLAYER_ID = Helpers.generate_uuid()
 
 func set_game_state(state):
 	GAME_STATE = state

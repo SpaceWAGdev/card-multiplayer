@@ -38,7 +38,7 @@ text = "CONNECT TO SERVER"
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="URLField2" type="LineEdit" parent="CenterContainer/VBoxContainer"]
+[node name="MatchID" type="LineEdit" parent="CenterContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
@@ -58,6 +58,6 @@ text = "CREATE CUSTOM GAME
 
 [connection signal="text_submitted" from="CenterContainer/VBoxContainer/URLField" to="." method="connect_to_server"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Button" to="." method="connect_to_server"]
-[connection signal="text_submitted" from="CenterContainer/VBoxContainer/URLField2" to="." method="connect_to_server"]
+[connection signal="text_submitted" from="CenterContainer/VBoxContainer/MatchID" to="." method="connect_to_server"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Button2" to="." method="connect_to_server"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Button3" to="." method="connect_to_server"]

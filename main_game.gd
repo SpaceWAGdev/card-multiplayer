@@ -39,6 +39,7 @@ func _ready():
 	init_card_areas()
 	GameState.on_enter_selectmode.connect(_dbg_display_select_mode)
 	GameState.on_exit_selectmode.connect(_dbg_clear_select_mode)
+	load_deck(GameState.DECK_PATH)
 
 
 func init_card_areas():
@@ -70,10 +71,12 @@ func poll_ws():
 		while socket.get_available_packet_count():
 			var packet = socket.get_packet()
 			print("Packet: ", packet.get_string_from_utf8())
+			# TODO: Switch to new JSON message format
 			if packet.get_string_from_utf8().contains("ROUNDOVER"):
 				GameState.begin_turn()
 				start_round()
 				$VBoxContainer/DebugUI/RoundCounter.text = str(ROUND)
+			# TODO: Switch to new JSON message format
 			if packet.get_string_from_utf8().contains("MATCH:"):
 				GameState.MATCH_ID = packet.get_string_from_utf8().split(":")[1]
 			else:
@@ -98,7 +101,7 @@ func wait_for_open_connection_and_send_message(message):
 		if socket.get_ready_state() == socket.STATE_OPEN:
 			$"VBoxContainer/DebugUI/Connect WS".set("theme_override_colors/font_color", Color.GREEN_YELLOW)
 			# Send the message once the connection is open
-			socket.send(message)
+			socket.send_text(message)
 			return true
 			
 		current_attempt += 1
@@ -215,7 +218,7 @@ func get_card_data(uuid: String):
 		return null
 
 func load_deck(deck_name: String):
-	var deck = JSON.parse_string(Helpers.load_text_file("res://Decks/" + deck_name + ".json"))
+	var deck = JSON.parse_string(Helpers.load_text_file("res://Decks/" + deck_name))
 	create_card_instance(get_card_data(deck["leader"]), false, "LOCAL_HAND")
 	for card in deck["cards"]:
 		print(card)
@@ -258,9 +261,6 @@ func move_card(card: Node, new_location: String):
 	
 	print(new_location_node.name, new_location_node.get_children())
 
-func _dbg_spawn_card():
-	load_deck("deck"+$VBoxContainer/DebugUI/LineEdit.text)
-
 func _dbg_begin():
 	GameState.set_game_state(GameState.STATE_LOCALTURN)
 	GameState.IS_BEGINNER = true
@@ -300,7 +300,14 @@ func sync():
 	for card in MASTER_LOCATION_RECORD["REMOTE_HAND"].get_children():
 		to_sync["REMOTE_HAND"].append(serialize_card(card))
 	var bytes = var_to_bytes_with_objects(to_sync)
-	wait_for_open_connection_and_send_message(bytes)             
+
+	var json = JSON.stringify({
+		"type": "Sync",
+		"sync-data" : bytes,
+		"match": GameState.MATCH_ID
+	})
+
+	wait_for_open_connection_and_send_message(json)             
 	
 func replace_areas(data: PackedByteArray): 
 	print(bytes_to_var_with_objects(data))
