@@ -58,8 +58,8 @@ func _process(_delta):
 func init_ws():
 	socket.connect_to_url(GameState.WS_SERVER_URL)
 
-func connect_ws(url):
-	GameState.WS_SERVER_URL = url
+func connect_ws():
+	socket.connect_to_url(GameState.WS_SERVER_URL)
 	get_tree().reload_current_scene()
 	
 func disconnect_ws(code = 1000):
