@@ -28,6 +28,20 @@ func join_match_with_key():
 
 func create_match_with_key():
 	connect_to_server("")
+	
+	%MatchID.select_all()
+	var id = %MatchID.get_selected_text()
+	%MatchID.deselect()
+
+	GameState.SETUP_MESSAGE = JSON.stringify({
+	"type" : "Control",
+	"control-operation" : "JOIN_MATCH",
+	"control-arguments" : {
+		"id": id },
+	"user": GameState.PLAYER_ID,
+	"match": GameState.MATCH_ID
+})
+
 
 func request_matchmaking():
 	connect_to_server("")

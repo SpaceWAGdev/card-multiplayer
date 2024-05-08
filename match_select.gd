@@ -18,7 +18,8 @@ func update_deck_list_mapping() -> void:
 	print(decks)
 
 func on_deck_selection_changed(i: int) -> void:
-	GameState.DECK_PATH = decks[i]
+	GameState.DECK_PATH = decks[i + 1]
+	print(decks[i + 1])
 
 func on_debug_state_changed(value: bool) -> void:
 	GameState.DEBUG_MODE = value
