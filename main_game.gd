@@ -2,15 +2,15 @@ extends Node
 
 var socket = WebSocketPeer.new()
 
-var MASTER_CARD_RECORD : Dictionary = {
-	"LOCAL_HAND": [],
-	"LOCAL_DECK": [],
-	"LOCAL_PLAYAREA": [],
-	"REMOTE_PLAYAREA": [],
-	"LOCAL_CHARACTER": [],
-	"LOCAL_GRAVEYARD": [],
-	"REMOTE_HAND": []
-}
+# var MASTER_CARD_RECORD : Dictionary = {
+# 	"LOCAL_HAND": [],
+# 	"LOCAL_DECK": [],
+# 	"LOCAL_PLAYAREA": [],
+# 	"REMOTE_PLAYAREA": [],
+# 	"LOCAL_CHARACTER": [],
+# 	"LOCAL_GRAVEYARD": [],
+# 	"REMOTE_HAND": []
+# }
 
 var MASTER_LOCATION_RECORD: Dictionary = {
 	"LOCAL_HAND": null,
@@ -183,11 +183,11 @@ func create_card_instance(data: Dictionary, check_for_duplicates = false, locati
 	card_image.find_child("Image").texture = img
 	card_image.script = script
 
-	if card_image in MASTER_CARD_RECORD[location] and check_for_duplicates:
+	if card_image in MASTER_LOCATION_RECORD[location].get_children() and check_for_duplicates:
 		return
 	
 	MASTER_LOCATION_RECORD[location].add_child(card_image)
-	update_screen_area(location)
+	# update_screen_area(location)
 	card_image.setup(data, self)
 
 	var ability_button : Button = card_image.find_child("Ability", true)
@@ -204,17 +204,17 @@ func create_card_instance(data: Dictionary, check_for_duplicates = false, locati
 	card_image.update_stats()
 	print("Instantiated ", data["name"], " (Card Object) in ", location )
 	
-func update_screen_area(area: String):
-	for child in find_child(area, true).get_children():
-		if child == null:
-			printerr("CHILD NULL")
-		if child not in MASTER_CARD_RECORD[area]:
-			MASTER_CARD_RECORD[area].append(child)
-			# print("Added " + child.get_meta("card_data")["name"] + " to " + area + " record") 
-	for child in MASTER_CARD_RECORD[area]:
-		if child not in find_child(area, true).get_children():
-			# print("Removed " + child.get_meta("card_data")["name"] + " from " +  area)
-			MASTER_CARD_RECORD[area].erase(child)
+# func update_screen_area(area: String):
+# 	for child in find_child(area, true).get_children():
+# 		if child == null:
+# 			printerr("CHILD NULL")
+# 		if child not in MASTER_CARD_RECORD[area]:
+# 			MASTER_CARD_RECORD[area].append(child)
+# 			# print("Added " + child.get_meta("card_data")["name"] + " to " + area + " record") 
+# 	for child in MASTER_CARD_RECORD[area]:
+# 		if child not in find_child(area, true).get_children():
+# 			# print("Removed " + child.get_meta("card_data")["name"] + " from " +  area)
+# 			MASTER_CARD_RECORD[area].erase(child)
 
 func get_card_data(uuid: String):
 	var card_list = JSON.parse_string((Helpers.load_text_file(("res://Cards/cards.json"))))
@@ -244,8 +244,8 @@ func move_card(card: Node, new_location: String):
 		return
 	old_parent.remove_child(card)
 	new_location_node.add_child(card)
-	update_screen_area(card.get_parent().name)
-	update_screen_area(new_location_node.name)
+	# update_screen_area(card.get_parent().name)
+	# update_screen_area(new_location_node.name)
 	if new_location == "LOCAL_PLAYAREA" and old_parent.name == "LOCAL_HAND":
 		card.battlecry()
 
@@ -315,7 +315,7 @@ func reset_game():
 	for key in MASTER_LOCATION_RECORD.keys(): 
 		for child in MASTER_LOCATION_RECORD[key].get_children(): 
 			MASTER_LOCATION_RECORD[key].remove_child(child)
-		update_screen_area(key)
+		# update_screen_area(key)
 	
 func clear_area(area: String):
 	for child in MASTER_LOCATION_RECORD[area].get_children():
