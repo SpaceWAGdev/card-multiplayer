@@ -21,6 +21,7 @@ async def server(websocket: websockets.WebSocketServerProtocol, path: str):
                 match data["control-operation"]:
                     case "JOIN_MATCH":
                         if data["control-arguments"]["id"] in matches:
+                            print(f'Player {data["user"] } joined match {data["control-arguments"]["id"]}')
                             matches[data["control-arguments"]["id"]].append(connected_clients[websocket.remote_address])
                             connected_clients[websocket.remote_address].send(json.dumps({
                                 "type": "Control",
@@ -31,6 +32,7 @@ async def server(websocket: websockets.WebSocketServerProtocol, path: str):
                             }))
                     case "CREATE_MATCH":
                         if data["control-arguments"]["id"] not in matches:
+                            print(f'Player {data["user"] } created match {data["control-arguments"]["id"]}')
                             matches[data["control-arguments"]["id"]] = [connected_clients[websocket.remote_address]]
                             connected_clients[websocket.remote_address].send(json.dumps({
                                 "type": "Control",
@@ -42,9 +44,7 @@ async def server(websocket: websockets.WebSocketServerProtocol, path: str):
 
                     case "LEAVE_MATCH":
                         print(f'Player {data["user"] } left match {data["match"]}')
-
-            else:
-                pass
+                    
 
             # Echo the message back to every other connected client
             # for client_address, client in connected_clients.items():
