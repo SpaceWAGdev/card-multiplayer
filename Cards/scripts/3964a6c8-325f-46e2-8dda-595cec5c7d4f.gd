@@ -1,7 +1,9 @@
 # JAKOB
 extends CardBase
 
+var brokkoli = load("res://Cards/magic_brokkoli.tres") as Card
+
 func battlecry():
 	print(data["name"]+ "'s custom Battlecry")
-	game_manager.create_card_instance(game_manager.get_card_data("7f2f4188-773d-4ac4-b8f4-075c6df850d1"), false, "LOCAL_HAND")
-	game_manager.create_card_instance(game_manager.get_card_data("7f2f4188-773d-4ac4-b8f4-075c6df850d1"), false, "LOCAL_HAND")	
+	game_manager.create_card_instance(brokkoli.get_data_legacy(), false, "LOCAL_HAND")
+	game_manager.create_card_instance(brokkoli.get_data_legacy(), false, "LOCAL_HAND")

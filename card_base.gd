@@ -1,7 +1,9 @@
 class_name CardBase
 extends Control
+
 @export var	data: Dictionary
 @export var delta_y_position: int = 45
+
 var game_manager: Node
 var attacks = 0
 var blocked_until_turn = 0
@@ -11,15 +13,15 @@ func _hover_enter() -> void:
 	if get_parent().name.contains("DECK") or get_parent().name.contains("GRAVEYARD"):
 		return 
 	var texture = find_child("Image").texture
-	var image = find_child("Hover_img")
+	var image = find_child("Hover_img").get_child(0)
 	var original_image = find_child("Image")
 	image.texture = texture
 	image.scale = Vector2(0.5, 0.5)
-	# var width = texture.get_width()
+	var width = image.texture.get_width()
 	# var height = texture.get_height()
 	# image gets centered over the original card
-	image.position = Vector2(original_image.position.x , original_image.position.y)
-	image.show()
+	image.position = Vector2(original_image.position.x + width * image.scale.x / 4 , original_image.position.y + delta_y_position)
+	find_child("Hover_img").show()
 
 func _draw() -> void:
 	draw_circle(Vector2(0,0), 20, Color.RED)

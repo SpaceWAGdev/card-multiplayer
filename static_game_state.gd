@@ -2,6 +2,7 @@ extends Node
 
 signal on_enter_selectmode()
 signal on_exit_selectmode()
+
 enum {
 	STATE_STARTING,
 	STATE_LOCALTURN,
@@ -23,7 +24,7 @@ var SETUP_MESSAGE = ""
 
 var MATCH_ID = null
 
-var DECK_PATH = "deck1.json"
+@export var DECK_PATH = load("res://Decks/deck1.tres")
 
 var DEBUG_MODE = false
 

@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Card" load_steps=4 format=3 uid="uid://crts3mi7dq85g"]
+
+[ext_resource type="Script" path="res://Cards/scripts/7f2f4188-773d-4ac4-b8f4-075c6df850d1.gd" id="1_hsb64"]
+[ext_resource type="Script" path="res://Cards/Card.gd" id="1_o2bge"]
+[ext_resource type="Texture2D" uid="uid://bx71opj28xunv" path="res://Cards/images/7f2f4188-773d-4ac4-b8f4-075c6df850d1.png" id="2_1df36"]
+
+[resource]
+script = ExtResource("1_o2bge")
+name = "Magischer Brokkoli"
+character_class = "Default"
+type = 1
+health = 0
+damage = 0
+mana = 0
+ability_mana_cost = 0
+uuid = "7f2f4188-773d-4ac4-b8f4-075c6df850d1"
+behaviour_script = ExtResource("1_hsb64")
+tooltip = ""
+image = ExtResource("2_1df36")

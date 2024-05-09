@@ -30,15 +30,22 @@ var MAX_SIZES: Dictionary = {
 	"REMOTE_HAND" = 9
 }
 
+@export var cards: Array[Card]
+
+var UUID_CARD_TABLE : Dictionary
+
 var ROUND = 0
 var MANA = 0
 var MAX_MANA = 10
 
 func _ready():
+	for card in cards:
+		UUID_CARD_TABLE[card.uuid] = card
 	init_ws()
 	init_card_areas()
 	GameState.on_enter_selectmode.connect(_dbg_display_select_mode)
 	GameState.on_exit_selectmode.connect(_dbg_clear_select_mode)
+	print(GameState.DECK_PATH.to_string())
 	load_deck(GameState.DECK_PATH)
 
 func init_card_areas():
@@ -165,7 +172,7 @@ func decorate_card(card_image, location, data):
 		for e in to_enable:
 			e.visible = true
 		
-	mana_label.text = data["mana"]
+	mana_label.text = str(data["mana"])
 
 func create_card_instance(data: Dictionary, check_for_duplicates = false, location = "LOCAL_DECK", mid : String = ""):
 	if MASTER_LOCATION_RECORD[location].get_child_count() > MAX_SIZES[location]:
@@ -173,8 +180,10 @@ func create_card_instance(data: Dictionary, check_for_duplicates = false, locati
 		return
 	var card_image = load("res://Cards/card.tscn").instantiate()
 	card_image.set_meta("card_data", data)
-	var script = load("res://Cards/scripts/" + data["uuid"] + ".gd")
-	var img = load("res://Cards/images/"+ data["uuid"] + ".png")
+	# var script = load("res://Cards/scripts/" + data["uuid"] + ".gd")
+	var script = data["script"]
+	# var img = load("res://Cards/images/"+ data["uuid"] + ".png")
+	var img = data["image"]
 	card_image.set_meta("mid", mid)
 	if mid == "":
 		card_image.set_meta("mid", Helpers.generate_uuid())
@@ -217,19 +226,19 @@ func create_card_instance(data: Dictionary, check_for_duplicates = false, locati
 # 			MASTER_CARD_RECORD[area].erase(child)
 
 func get_card_data(uuid: String):
-	var card_list = JSON.parse_string((Helpers.load_text_file(("res://Cards/cards.json"))))
-	if card_list.has(uuid):
-		return card_list[uuid]
-	else:
-		return null
+	return UUID_CARD_TABLE[uuid].get_data_legacy()
+	# var card_list = JSON.parse_string((Helpers.load_text_file(("res://Cards/cards.json"))))
+	# if card_list.has(uuid):
+	# 	return card_list[uuid]
+	# else:
+	# 	return null
 
-func load_deck(deck_name: String):
-	var deck = JSON.parse_string(Helpers.load_text_file("res://Decks/" + deck_name))
-	create_card_instance(get_card_data(deck["leader"]), false, "LOCAL_HAND")
-	for card in deck["cards"]:
+func load_deck(deck: Deck):
+	create_card_instance(deck.leader.get_data_legacy(), false, "LOCAL_HAND")
+	for card in deck.cards:
 		print(card)
-		create_card_instance(get_card_data(card))
-	sync()
+		create_card_instance(card.get_data_legacy())
+
 
 func draw_card():
 	var cards = MASTER_LOCATION_RECORD["LOCAL_DECK"].get_children()

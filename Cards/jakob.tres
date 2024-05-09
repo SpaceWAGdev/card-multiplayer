@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Card" load_steps=4 format=3 uid="uid://dm6vvdpw6y33y"]
+
+[ext_resource type="Script" path="res://Cards/scripts/3964a6c8-325f-46e2-8dda-595cec5c7d4f.gd" id="1_5j7n2"]
+[ext_resource type="Texture2D" uid="uid://b5n5jhxp22cw3" path="res://Cards/images/3964a6c8-325f-46e2-8dda-595cec5c7d4f.png" id="1_xmu76"]
+[ext_resource type="Script" path="res://Cards/Card.gd" id="2_76rxy"]
+
+[resource]
+script = ExtResource("2_76rxy")
+name = "Jakob"
+character_class = "Barde"
+type = 0
+health = 10
+damage = 5
+mana = 3
+ability_mana_cost = 1
+uuid = "3964a6c8-325f-46e2-8dda-595cec5c7d4f"
+behaviour_script = ExtResource("1_5j7n2")
+tooltip = ""
+image = ExtResource("1_xmu76")

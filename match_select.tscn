@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cwaygpee26s8r"]
+[gd_scene load_steps=3 format=3 uid="uid://cwaygpee26s8r"]
 
 [ext_resource type="Script" path="res://match_select.gd" id="1_b1amd"]
+[ext_resource type="Resource" uid="uid://cc4uaor3se322" path="res://Decks/deck1.tres" id="2_2n2gt"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -12,6 +13,7 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_b1amd")
+decks = Array[Resource("res://Decks/Deck.gd")]([ExtResource("2_2n2gt")])
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 0

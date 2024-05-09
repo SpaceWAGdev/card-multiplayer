@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://3ltu4okdvm7a"]
+[gd_scene load_steps=2 format=3 uid="uid://3ltu4okdvm7a"]
+
+[ext_resource type="PackedScene" uid="uid://cvdtw2ohsjsbg" path="res://card_image_overlay.tscn" id="1_evckd"]
 
 [node name="VBoxContainer" type="VBoxContainer"]
 offset_right = 40.0
@@ -38,5 +40,5 @@ layout_mode = 2
 size_flags_vertical = 3
 text = "ABILITY"
 
-[node name="Hover_img" type="Sprite2D" parent="."]
-position = Vector2(0, 331)
+[node name="Hover_img" parent="." instance=ExtResource("1_evckd")]
+z_index = 10
