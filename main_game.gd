@@ -241,10 +241,10 @@ func load_deck(deck: Deck):
 
 
 func draw_card():
-	var cards = MASTER_LOCATION_RECORD["LOCAL_DECK"].get_children()
-	if cards.is_empty():
+	var card_list = MASTER_LOCATION_RECORD["LOCAL_DECK"].get_children()
+	if card_list.is_empty():
 		return		
-	move_card(cards.pick_random(), "LOCAL_HAND")
+	move_card(card_list.pick_random(), "LOCAL_HAND")
 
 func move_card(card: Node, new_location: String):
 	var old_parent = card.get_parent()
