@@ -15,21 +15,46 @@ size_flags_vertical = 3
 script = ExtResource("1_646wj")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+z_index = -5
+y_sort_enabled = true
 layout_mode = 2
-mouse_filter = 2
+mouse_filter = 1
 color = Color(0.164706, 0.164706, 0.164706, 1)
 
-[node name="LOCAL_DECK" type="Node" parent="ColorRect"]
-unique_name_in_owner = true
+[node name="LOCAL_DECK" type="Container" parent="ColorRect"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="LOCAL_GRAVEYARD" type="Node" parent="ColorRect"]
-unique_name_in_owner = true
+[node name="LOCAL_GRAVEYARD" type="Container" parent="ColorRect"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="REMOTE_HAND" type="Node" parent="ColorRect"]
+[node name="REMOTE_HAND" type="Container" parent="ColorRect"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/separation = 30
+
+[node name="REMOTE_PLAYAREA" type="HBoxContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="LOCAL_PLAYAREA" type="HBoxContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
 
 [node name="DebugUI" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -89,18 +114,6 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 text = "Match ID"
-
-[node name="REMOTE_PLAYAREA" type="HBoxContainer" parent="VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-alignment = 1
-
-[node name="LOCAL_PLAYAREA" type="HBoxContainer" parent="VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-alignment = 1
 
 [node name="LOCAL_HAND" type="HBoxContainer" parent="VBoxContainer"]
 unique_name_in_owner = true

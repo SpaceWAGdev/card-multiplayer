@@ -24,11 +24,12 @@ func join_match_with_key():
 		"user": GameState.PLAYER_ID,
 		"match": GameState.MATCH_ID
 	})
+	print(GameState.SETUP_MESSAGE)
 	switch_scene()
 
 func create_match_with_key():
 	connect_to_server("")
-	
+
 	%MatchID.select_all()
 	var id = %MatchID.get_selected_text()
 	%MatchID.deselect()
@@ -40,7 +41,9 @@ func create_match_with_key():
 		"id": id },
 	"user": GameState.PLAYER_ID,
 	"match": GameState.MATCH_ID
-})
+	})
+	print(GameState.SETUP_MESSAGE)
+	switch_scene()
 
 
 func request_matchmaking():

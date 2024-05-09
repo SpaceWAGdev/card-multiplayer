@@ -51,17 +51,20 @@ var SELECT_MASK_FRIENDLY = ["LOCAL_PLAYAREA"]
 
 var SELECT_MASK = []
 
+var _default_cursor = preload("res://default_cursor.png")
+var _selection_cursor = preload("res://select_cursor.png")
+
 func get_card_selection(callback: Callable, mask = SELECT_MASK_ENEMIES):
 	SELECT_MASK = mask
 	GAME_MODE = MODE_SELECT
 	print("SELECT MODE STARTED")
 	SELECT_CALLBACK = callback
 	on_enter_selectmode.emit()
-	Input.set_default_cursor_shape(Input.CURSOR_CROSS)
+	Input.set_custom_mouse_cursor(_selection_cursor)
 	
 func cancel_card_selection():
 	SELECT_MASK = []
 	print("SELECT MODE CANCELLED")
 	GAME_MODE = MODE_PLAY
 	on_exit_selectmode.emit()
-	Input.set_default_cursor_shape(Input.CURSOR_ARROW)
+	Input.set_custom_mouse_cursor(_default_cursor)

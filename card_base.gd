@@ -10,25 +10,22 @@ var friendly = true
 func _hover_enter() -> void:
 	if get_parent().name.contains("DECK") or get_parent().name.contains("GRAVEYARD"):
 		return 
-	var image = preload("res://card_image_overlay.tscn").instantiate()
-	# TODO: Don't instantiate, just toggle visiblity
-	image.get_child(0).texture = find_child("Image").texture
+	var texture = find_child("Image").texture
+	var image = find_child("Hover_img")
+	var original_image = find_child("Image")
+	image.texture = texture
 	image.scale = Vector2(0.5, 0.5)
-	image.name = "hover_img"
-	image.z_index = 20
-	var width = image.get_child(0).texture.get_width()
-	var height = image.get_child(0).texture.get_height()
-
+	# var width = texture.get_width()
+	# var height = texture.get_height()
 	# image gets centered over the original card
-	image.position = Vector2((image.position.x + width / 4 * image.scale.x ), (image.position.y + height / 6 * image.scale.y) - delta_y_position)
+	image.position = Vector2(original_image.position.x , original_image.position.y)
+	image.show()
 
-	self.add_child(image)
+func _draw() -> void:
+	draw_circle(Vector2(0,0), 20, Color.RED)
 
 func _hover_exit() -> void:
-	var image = get_child(3)
-	print(image)
-	if image != null:
-		image.queue_free()
+	find_child("Hover_img").hide()
 
 func setup(_data: Dictionary, _game_manager):
 	data = _data

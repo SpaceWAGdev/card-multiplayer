@@ -40,8 +40,6 @@ func _ready():
 	GameState.on_enter_selectmode.connect(_dbg_display_select_mode)
 	GameState.on_exit_selectmode.connect(_dbg_clear_select_mode)
 	load_deck(GameState.DECK_PATH)
-	wait_for_open_connection_and_send_message(GameState.SETUP_MESSAGE)
-
 
 func init_card_areas():
 	# TODO: Switch to @exports
@@ -54,9 +52,13 @@ func init_card_areas():
 
 func _process(_delta):
 	poll_ws()
+	if Input.is_key_pressed(KEY_ESCAPE) and GameState.GAME_MODE == GameState.MODE_SELECT:
+		GameState.cancel_card_selection()
 
 func init_ws():
 	socket.connect_to_url(GameState.WS_SERVER_URL)
+	print(GameState.SETUP_MESSAGE)
+	wait_for_open_connection_and_send_message(GameState.SETUP_MESSAGE)
 
 func connect_ws():
 	socket.connect_to_url(GameState.WS_SERVER_URL)
@@ -73,16 +75,21 @@ func poll_ws():
 		while socket.get_available_packet_count():
 			var packet = socket.get_packet()
 			print("Packet: ", packet.get_string_from_utf8())
-			# TODO: Switch to new JSON message format
-			if packet.get_string_from_utf8().contains("ROUNDOVER"):
-				GameState.begin_turn()
-				start_round()
-				$VBoxContainer/DebugUI/RoundCounter.text = str(ROUND)
-			# TODO: Switch to new JSON message format
-			if packet.get_string_from_utf8().contains("MATCH:"):
-				GameState.MATCH_ID = packet.get_string_from_utf8().split(":")[1]
-			else:
-				deserialize_cards(packet)
+			var packet_data = JSON.parse_string(packet.get_string_from_utf8())
+
+			match packet_data["type"]:
+				"Control":
+					match packet_data["control-message"]:
+						"ROUNDOVER":
+							GameState.begin_turn()
+							start_round()
+							$VBoxContainer/DebugUI/RoundCounter.text = str(ROUND)
+						"CONFIRM_MATCH":
+							GameState.MATCH_ID = packet_data["control-arguments"]["id"]
+				"Sync":
+					deserialize_cards(packet_data["sync-data"])
+				"Message" :
+					print(packet_data["message"])
 			return packet
 	elif state == WebSocketPeer.STATE_CLOSING:
 		# Keep polling to achieve proper close.
@@ -107,7 +114,7 @@ func wait_for_open_connection_and_send_message(message):
 			return true
 			
 		current_attempt += 1
-		await get_tree().create_timer(interval_time)
+		await get_tree().create_timer(interval_time).timeout
 
 	return false
 
@@ -189,10 +196,6 @@ func create_card_instance(data: Dictionary, check_for_duplicates = false, locati
 	var click_event = card_image.gui_input
 	click_event.connect(card_image.on_click)
 
-	if location == "LOCAL_DECK":
-		card_image.z_index = -10
-		card_image.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	
 	if location == "LOCAL_PLAYAREA" and mid == "":
 		card_image.battlecry()
 
@@ -245,17 +248,6 @@ func move_card(card: Node, new_location: String):
 	update_screen_area(new_location_node.name)
 	if new_location == "LOCAL_PLAYAREA" and old_parent.name == "LOCAL_HAND":
 		card.battlecry()
-	if new_location in ["LOCAL_GRAVEYARD", "LOCAL_DECK"]:
-		card.z_index = -10
-		card.set_process(false)
-		card.visible = false
-	else:
-		card.visible = true
-		card.set_process(true)
-
-	if not new_location.contains("REMOTE"):
-		card.z_index = 0
-		card.set_process(true)
 
 	if new_location.begins_with("LOCAL"):
 		card.friendly = true
@@ -278,7 +270,11 @@ func finish_round():
 	ROUND += 1
 	$VBoxContainer/DebugUI/RoundCounter.text = str(ROUND)
 	GameState.GAME_STATE = GameState.STATE_REMOTETURN
-	wait_for_open_connection_and_send_message("ROUNDOVER\n")
+	wait_for_open_connection_and_send_message(JSON.stringify({
+		"type" : "Message",
+		"match" : GameState.MATCH_ID,
+		"message" : "ROUNDOVER"
+	}))
 	sync()
 
 func start_round():

@@ -21,6 +21,10 @@ config/icon="res://icon.svg"
 Helpers="*res://helpers.gd"
 GameState="*res://static_game_state.gd"
 
+[display]
+
+mouse_cursor/custom_image="res://default_cursor.png"
+
 [dotnet]
 
 project/assembly_name="card-game"

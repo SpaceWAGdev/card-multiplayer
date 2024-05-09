@@ -13,8 +13,38 @@ async def server(websocket: websockets.WebSocketServerProtocol, path: str):
     connected_clients[websocket.remote_address] = websocket
     try:
         async for message in websocket:
-            print(f"Received message from {websocket.remote_address}: {message}")
-            print(json.loads(message))
+            data = json.loads(message)
+            print(f"Received message from {websocket.remote_address}: {data["type"]}")
+            print("#"*10)
+
+            if data["type"] == "Control":
+                match data["control-operation"]:
+                    case "JOIN_MATCH":
+                        if data["control-arguments"]["id"] in matches:
+                            matches[data["control-arguments"]["id"]].append(connected_clients[websocket.remote_address])
+                            connected_clients[websocket.remote_address].send(json.dumps({
+                                "type": "Control",
+                                "control-operation" : "CONFIRM_MATCH",
+                                "control-arguments" : {
+                                    "id" : data["control-arguments"]["id"]
+                                }
+                            }))
+                    case "CREATE_MATCH":
+                        if data["control-arguments"]["id"] not in matches:
+                            matches[data["control-arguments"]["id"]] = [connected_clients[websocket.remote_address]]
+                            connected_clients[websocket.remote_address].send(json.dumps({
+                                "type": "Control",
+                                "control-operation" : "CONFIRM_MATCH",
+                                "control-arguments" : {
+                                    "id" : data["control-arguments"]["id"]
+                                }
+                            }))
+
+                    case "LEAVE_MATCH":
+                        print(f'Player {data["user"] } left match {data["match"]}')
+
+            else:
+                pass
 
             # Echo the message back to every other connected client
             # for client_address, client in connected_clients.items():

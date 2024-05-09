@@ -37,3 +37,6 @@ stretch_mode = 5
 layout_mode = 2
 size_flags_vertical = 3
 text = "ABILITY"
+
+[node name="Hover_img" type="Sprite2D" parent="."]
+position = Vector2(0, 331)
