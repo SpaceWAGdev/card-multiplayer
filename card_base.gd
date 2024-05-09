@@ -23,9 +23,6 @@ func _hover_enter() -> void:
 	image.position = Vector2(original_image.position.x + width * image.scale.x / 4 , original_image.position.y + delta_y_position)
 	find_child("Hover_img").show()
 
-func _draw() -> void:
-	draw_circle(Vector2(0,0), 20, Color.RED)
-
 func _hover_exit() -> void:
 	find_child("Hover_img").hide()
 
