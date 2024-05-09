@@ -55,6 +55,6 @@ text = "CREATE CUSTOM GAME
 
 [connection signal="text_submitted" from="CenterContainer/VBoxContainer/URLField" to="." method="connect_to_server"]
 [connection signal="text_submitted" from="CenterContainer/VBoxContainer/MatchID" to="." method="connect_to_server"]
-[connection signal="pressed" from="CenterContainer/VBoxContainer/Button2" to="." method="connect_to_server"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Button2" to="." method="join_match_with_key"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Button2" to="." method="connect_to_server"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Button3" to="." method="create_match_with_key"]

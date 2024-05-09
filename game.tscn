@@ -15,6 +15,14 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_646wj")
+MASTER_LOCATION_RECORD = {
+"LOCAL_DECK": NodePath("ColorRect/LOCAL_DECK"),
+"LOCAL_GRAVEYARD": NodePath("ColorRect/LOCAL_GRAVEYARD"),
+"LOCAL_HAND": NodePath("VBoxContainer/LOCAL_HAND"),
+"LOCAL_PLAYAREA": NodePath("VBoxContainer/LOCAL_PLAYAREA"),
+"REMOTE_HAND": NodePath("ColorRect/REMOTE_HAND"),
+"REMOTE_PLAYAREA": NodePath("VBoxContainer/REMOTE_PLAYAREA")
+}
 cards = Array[Resource("res://Cards/Card.gd")]([ExtResource("2_ujaya"), ExtResource("3_a7gix")])
 
 [node name="ColorRect" type="ColorRect" parent="."]
